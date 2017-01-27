@@ -42,6 +42,26 @@ final class SWApiClient: APIClient {
             return starships.flatMap { return Starship(JSON: $0) }
         }, completion: completion)
     }
+    
+    func fetchForVehicle(nextPage: Int, completion: @escaping (APIResult<Vehicle>) -> Void) {
+        var components = URLComponents(string: "http://swapi.co")!
+        var queryItens = [URLQueryItem]()
+        queryItens.append(URLQueryItem(name: "page", value: String(nextPage)))
+        components.path = "/api/vehicles/"
+        components.queryItems = queryItens
+        let url = components.url!
+        
+        let request = URLRequest(url: url)
+        
+        
+        fetch(request: request, parse: { (json) -> [Vehicle]? in
+            guard let vehicles = json["results"] as? [[String:AnyObject]] else {
+                return nil
+            }
+            return vehicles.flatMap { return Vehicle(JSON: $0) }
+        }, completion: completion)
+    }
+
 }
 
 

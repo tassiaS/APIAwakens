@@ -36,9 +36,11 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     var type = ResourceType.none
     var swAPIClient: SWApiClient = SWApiClient()
     var starships = [Starship]()
+    var vehicles = [Vehicle]()
     var valueSelectedAllTypes: Measurable!
     var valueSelectedTransportCraft: TransportCraft!
     var exchangeRateValue = 0
+    var isApiFirstCall = true
 
     var hasNextPage = true {
         didSet {
@@ -58,6 +60,7 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     func loadData() {
         switch type {
             case .starship : fetchForStarship(with: nextPageNumber)
+            case .vehicle : fetchForVehicle(with: nextPageNumber)
             default: break
         }
     }
@@ -75,20 +78,56 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                     }
                     self?.pickerView.reloadAllComponents()
                     //set the first value since the user has not selected any row on the pickerView yet
-                    self?.setLabels(with: (self?.starships.first!)!)
+                    if (self?.isApiFirstCall)! {
+                        self?.setLabels(with: (self?.starships.first!)!)
+                        self?.isApiFirstCall = false
+                    }
                 case .failuere(let error):
                     print(error)
             }
         })
     }
     
+    func fetchForVehicle(with page: Int) {
+        swAPIClient.fetchForVehicle(nextPage: nextPageNumber, completion: { [weak self] (result) in
+            switch result {
+            case .success(let result):
+                self?.pickerData = [String]()
+                self?.vehicles += result.resource
+                self?.objectQuantity = (self?.vehicles.count)!
+                self?.hasNextPage = result.hasPage
+                for vehicle in (self?.vehicles)! {
+                    self?.pickerData.append(vehicle.name)
+                }
+                self?.pickerView.reloadAllComponents()
+                //set the first value since the user has not selected any row on the pickerView yet
+                if (self?.isApiFirstCall)! {
+                    self?.setLabels(with: (self?.vehicles.first!)!)
+                    self?.isApiFirstCall = false
+                }
+            case .failuere(let error):
+                print(error)
+            }
+        })
+    }
+
+    
     func setLabels(with valueSelected: TransportCraft) {
-        let value = getSize(from: starships)
+      switch type {
+        case .starship:
+              let starship = getSize(from: starships)
+              smallestLabel.text = starship.smallest.name
+              largestLabel.text = starship.largest.name
+        case .vehicle:
+            let vehicle = getSize(from: vehicles)
+            smallestLabel.text = vehicle.smallest.name
+            largestLabel.text = vehicle.largest.name
+        case .character: break
+        case .none: break
+        }
+        
         self.valueSelectedTransportCraft = valueSelected
         self.valueSelectedAllTypes = valueSelected
-
-        smallestLabel.text = value.smallest.name
-        largestLabel.text = value.largest.name
 
         nameLabel.text = valueSelected.name
         makeLabel.text = valueSelected.make
@@ -116,6 +155,8 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                 switch type {
                 case .starship:
                     fetchForStarship(with: nextPageNumber)
+                case .vehicle:
+                    fetchForVehicle(with: nextPageNumber)
                 default:
                     break
                 }
@@ -126,18 +167,22 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         switch type {
-            case .starship:
-                setLabels(with: starships[row])
-            default: break
+        case .starship:
+            setLabels(with: starships[row])
+        case .vehicle:
+            setLabels(with: vehicles[row])
+        default: break
         }
     }
     
+    // Defines who is the smallest and largest
     func getSize<T: Measurable>(from resource: [T]) -> (smallest: T, largest: T) {
         let largest = resource.max { a, b in a.size < b.size }
         let smallest = resource.min { a, b in a.size < b.size }
         return (smallest: smallest!, largest: largest!)
     }
     
+    // Convert credit-USD / English-Metric
     @IBAction func convertCostToCredit(_ sender: Any) {
         exchangeTextField.isHidden = true
         exchangeLabel.isHidden = true
@@ -150,11 +195,17 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         creditButton.isHighlighted = true
     }
     @IBAction func convertLengthToEnglish(_ sender: Any) {
+        exchangeTextField.isHidden = true
+        exchangeLabel.isHidden = true
+
         metricButton.isHighlighted = true
         totalValueToEnglish = valueSelectedAllTypes.size / 0.9144
         lengthLabel.text = String(format:"%.01f", valueSelectedAllTypes.size / 0.9144)
     }
     @IBAction func convertLengthToMetric(_ sender: Any) {
+        exchangeTextField.isHidden = true
+        exchangeLabel.isHidden = true
+
         EnglishButton.isHighlighted = true
         lengthLabel.text = String(format:"%.01f", totalValueToEnglish * 0.9144)
     }
@@ -164,7 +215,7 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         return true
     }
     
-    //Add done button to numpad
+    // Add done button to numpad
     func addDoneButtonOnKeyboard() {
         let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
         doneToolbar.barStyle = UIBarStyle.default
