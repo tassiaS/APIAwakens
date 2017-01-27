@@ -10,12 +10,21 @@ import UIKit
 
 class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIScrollViewDelegate, UITextFieldDelegate {
     
-    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var nameValueLabel: UILabel!
+    @IBOutlet weak var makeValueLabel: UILabel!
+    @IBOutlet weak var costValueLabel: UILabel!
+    @IBOutlet weak var lengthValueLabel: UILabel!
+    @IBOutlet weak var classValueLabel: UILabel!
+    @IBOutlet weak var crewValueLabel: UILabel!
+    
     @IBOutlet weak var makeLabel: UILabel!
     @IBOutlet weak var costLabel: UILabel!
     @IBOutlet weak var lengthLabel: UILabel!
     @IBOutlet weak var classLabel: UILabel!
     @IBOutlet weak var crewLabel: UILabel!
+    
+    
+    
     @IBOutlet weak var pickerView: UIPickerView!
     @IBOutlet weak var smallestLabel: UILabel!
     @IBOutlet weak var largestLabel: UILabel!
@@ -37,6 +46,7 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     var swAPIClient: SWApiClient = SWApiClient()
     var starships = [Starship]()
     var vehicles = [Vehicle]()
+    var characters = [Character]()
     var valueSelectedAllTypes: Measurable!
     var valueSelectedTransportCraft: TransportCraft!
     var exchangeRateValue = 0
@@ -61,6 +71,7 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         switch type {
             case .starship : fetchForStarship(with: nextPageNumber)
             case .vehicle : fetchForVehicle(with: nextPageNumber)
+            case .character : fetchForCharacter(with: nextPageNumber)
             default: break
         }
     }
@@ -111,6 +122,29 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         })
     }
 
+    func fetchForCharacter(with page: Int) {
+        swAPIClient.fetchForCharacter(nextPage: nextPageNumber, completion: { [weak self] (result) in
+            switch result {
+            case .success(let result):
+                self?.pickerData = [String]()
+                self?.characters += result.resource
+                self?.objectQuantity = (self?.characters.count)!
+                self?.hasNextPage = result.hasPage
+                for character in (self?.characters)! {
+                    self?.pickerData.append(character.name)
+                }
+                self?.pickerView.reloadAllComponents()
+                //set the first value since the user has not selected any row on the pickerView yet
+                if (self?.isApiFirstCall)! {
+                    self?.setLabels(with: (self?.characters.first!)!)
+                    self?.isApiFirstCall = false
+                }
+            case .failuere(let error):
+                print(error)
+            }
+        })
+    }
+
     
     func setLabels(with valueSelected: TransportCraft) {
       switch type {
@@ -129,12 +163,43 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         self.valueSelectedTransportCraft = valueSelected
         self.valueSelectedAllTypes = valueSelected
 
-        nameLabel.text = valueSelected.name
-        makeLabel.text = valueSelected.make
-        costLabel.text = String(valueSelected.cost)
-        lengthLabel.text = String(valueSelected.size)
-        classLabel.text = valueSelected.swClass
-        crewLabel.text = valueSelected.crew
+        nameValueLabel.text = valueSelected.name
+        makeValueLabel.text = valueSelected.make
+        costValueLabel.text = String(valueSelected.cost)
+        lengthValueLabel.text = String(valueSelected.size)
+        classValueLabel.text = valueSelected.swClass
+        crewValueLabel.text = valueSelected.crew
+    }
+    
+    func setLabels(with valueSelected: Character) {
+        
+        hideTransportCraftViews()
+        
+        let character = getSize(from: characters)
+        smallestLabel.text = character.smallest.name
+        largestLabel.text = character.largest.name
+        
+
+        self.valueSelectedAllTypes = valueSelected
+        
+        // Update label's text for character
+        makeLabel.text = "Born"
+        costLabel.text = "Home"
+        lengthLabel.text = "Height"
+        classLabel.text = "Eyes"
+        crewLabel.text = "Hair"
+        
+        nameValueLabel.text = valueSelected.name
+        makeValueLabel.text = valueSelected.born
+        costValueLabel.text = "home"
+        lengthValueLabel.text = String(valueSelected.size)
+        classValueLabel.text = valueSelected.eyes
+        crewValueLabel.text = valueSelected.hair
+    }
+
+    func hideTransportCraftViews() {
+        usdButton.isHidden = true
+        creditButton.isHidden = true
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -157,6 +222,8 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                     fetchForStarship(with: nextPageNumber)
                 case .vehicle:
                     fetchForVehicle(with: nextPageNumber)
+                case .character:
+                    fetchForCharacter(with: nextPageNumber)
                 default:
                     break
                 }
@@ -171,6 +238,8 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             setLabels(with: starships[row])
         case .vehicle:
             setLabels(with: vehicles[row])
+        case .character:
+            setLabels(with: characters[row])
         default: break
         }
     }
@@ -200,14 +269,14 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
 
         metricButton.isHighlighted = true
         totalValueToEnglish = valueSelectedAllTypes.size / 0.9144
-        lengthLabel.text = String(format:"%.01f", valueSelectedAllTypes.size / 0.9144)
+        lengthValueLabel.text = String(format:"%.01f", valueSelectedAllTypes.size / 0.9144)
     }
     @IBAction func convertLengthToMetric(_ sender: Any) {
         exchangeTextField.isHidden = true
         exchangeLabel.isHidden = true
 
         EnglishButton.isHighlighted = true
-        lengthLabel.text = String(format:"%.01f", totalValueToEnglish * 0.9144)
+        lengthValueLabel.text = String(format:"%.01f", totalValueToEnglish * 0.9144)
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {

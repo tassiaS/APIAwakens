@@ -61,6 +61,26 @@ final class SWApiClient: APIClient {
             return vehicles.flatMap { return Vehicle(JSON: $0) }
         }, completion: completion)
     }
+    
+    func fetchForCharacter(nextPage: Int, completion: @escaping (APIResult<Character>) -> Void) {
+        var components = URLComponents(string: "http://swapi.co")!
+        var queryItens = [URLQueryItem]()
+        queryItens.append(URLQueryItem(name: "page", value: String(nextPage)))
+        components.path = "/api/people/"
+        components.queryItems = queryItens
+        let url = components.url!
+        
+        let request = URLRequest(url: url)
+        
+        
+        fetch(request: request, parse: { (json) -> [Character]? in
+            guard let characters = json["results"] as? [[String:AnyObject]] else {
+                return nil
+            }
+            return characters.flatMap { return Character(JSON: $0) }
+        }, completion: completion)
+    }
+
 
 }
 

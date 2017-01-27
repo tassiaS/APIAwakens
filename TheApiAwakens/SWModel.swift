@@ -123,6 +123,44 @@ struct Starship: TransportCraft {
     }
 }
 
+
+struct Character: Measurable {
+    var name: String
+    var born: String
+    var size: Double
+    //var home: String
+    var eyes: String
+    var hair: String
+    
+    init?(JSON: [String : AnyObject]) {
+        
+        guard let name = JSON["name"] as? String else {
+            return nil
+        }
+        guard let height = JSON["height"] as? String else {
+            return nil
+        }
+        guard let born = JSON["birth_year"] as? String else {
+            return nil
+        }
+        guard let eyes = JSON["eye_color"] as? String else {
+            return nil
+        }
+        guard let hair = JSON["hair_color"] as? String else {
+            return nil
+        }
+        
+        self.name = name
+        self.born = born
+        self.eyes = eyes
+        self.hair = hair
+        
+        let size = String(format:"%.2f", height.doubleValue)
+        self.size = Double(size)!
+        
+    }
+}
+
 extension String {
     static let numberFormatter = NumberFormatter()
     var doubleValue: Double {

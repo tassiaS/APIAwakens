@@ -14,11 +14,11 @@ protocol JSONDecodable {
     init?(JSON: [String: AnyObject])
 }
 
-protocol Measurable {
+protocol Measurable: JSONDecodable{
     var size: Double { get }
 }
 
-protocol TransportCraft: JSONDecodable, Measurable {
+protocol TransportCraft: Measurable {
     var name: String { get }
     var make: String { get }
     var cost: Double { get }

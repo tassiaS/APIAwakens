@@ -385,17 +385,22 @@
                     </view>
                     <connections>
                         <outlet property="EnglishButton" destination="h09-UZ-y7a" id="qan-Mm-cFL"/>
-                        <outlet property="classLabel" destination="vTd-Ur-Cw4" id="2eo-tb-VV4"/>
-                        <outlet property="costLabel" destination="AC3-ya-dFJ" id="7nr-fA-bza"/>
+                        <outlet property="classLabel" destination="178-QB-LV3" id="mqn-si-eTr"/>
+                        <outlet property="classValueLabel" destination="vTd-Ur-Cw4" id="KyM-BO-ZUU"/>
+                        <outlet property="costLabel" destination="CJh-5k-4JE" id="j8i-iE-6cF"/>
+                        <outlet property="costValueLabel" destination="AC3-ya-dFJ" id="VwK-h3-DXg"/>
                         <outlet property="creditButton" destination="5lP-C4-9hM" id="fHG-O2-uOa"/>
-                        <outlet property="crewLabel" destination="8ZW-tl-nxu" id="pbN-vu-RkL"/>
+                        <outlet property="crewLabel" destination="dmq-6k-Wc7" id="7kN-6J-33h"/>
+                        <outlet property="crewValueLabel" destination="8ZW-tl-nxu" id="DMg-Oq-TQJ"/>
                         <outlet property="exchangeLabel" destination="VMZ-pe-1Ld" id="3rH-rV-rsb"/>
                         <outlet property="exchangeTextField" destination="lcK-vz-91k" id="h9J-3G-oER"/>
                         <outlet property="largestLabel" destination="nEy-l9-JUJ" id="PHT-Dt-TS2"/>
-                        <outlet property="lengthLabel" destination="hjW-Jl-LYA" id="hSr-Qi-DC8"/>
-                        <outlet property="makeLabel" destination="Q0u-wi-8kd" id="Wbi-PH-5Kk"/>
+                        <outlet property="lengthLabel" destination="qJ9-8s-cnb" id="VX3-78-jsj"/>
+                        <outlet property="lengthValueLabel" destination="hjW-Jl-LYA" id="n39-2I-ACc"/>
+                        <outlet property="makeLabel" destination="WBu-HP-zzD" id="VVa-cb-zVI"/>
+                        <outlet property="makeValueLabel" destination="Q0u-wi-8kd" id="cvZ-GS-q2F"/>
                         <outlet property="metricButton" destination="avi-bi-dbK" id="eY1-Q9-cof"/>
-                        <outlet property="nameLabel" destination="X11-jG-adI" id="VGI-je-Aby"/>
+                        <outlet property="nameValueLabel" destination="X11-jG-adI" id="iwg-iv-Lc6"/>
                         <outlet property="pickerView" destination="f2M-PI-MZr" id="Uyw-rw-Ipk"/>
                         <outlet property="smallestLabel" destination="e3Q-Tb-BvP" id="BYb-wf-BtH"/>
                         <outlet property="usdButton" destination="gyH-0X-61Z" id="soi-7z-Jfb"/>
