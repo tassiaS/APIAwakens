@@ -256,18 +256,21 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         exchangeTextField.isHidden = true
         exchangeLabel.isHidden = true
         costLabel.text = String(valueSelectedTransportCraft.cost)
-        usdButton.isHighlighted = true
+        usdButton.isSelected = false
+        creditButton.isSelected = true
     }
     @IBAction func convertCostToUSD(_ sender: Any) {
         exchangeTextField.isHidden = false
         exchangeLabel.isHidden = false
-        creditButton.isHighlighted = true
+        usdButton.isSelected = true
+        creditButton.isSelected = false
     }
     @IBAction func convertLengthToEnglish(_ sender: Any) {
         exchangeTextField.isHidden = true
         exchangeLabel.isHidden = true
 
-        metricButton.isHighlighted = true
+        EnglishButton.isSelected = true
+        metricButton.isSelected = false
         totalValueToEnglish = valueSelectedAllTypes.size / 0.9144
         lengthValueLabel.text = String(format:"%.01f", valueSelectedAllTypes.size / 0.9144)
     }
@@ -275,7 +278,8 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         exchangeTextField.isHidden = true
         exchangeLabel.isHidden = true
 
-        EnglishButton.isHighlighted = true
+        metricButton.isSelected = true
+        EnglishButton.isSelected = false
         lengthValueLabel.text = String(format:"%.01f", totalValueToEnglish * 0.9144)
     }
     

@@ -283,7 +283,7 @@
                                     <action selector="convertCostToUSD:" destination="X7w-tD-2PU" eventType="touchUpInside" id="Mq3-iW-wC2"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" highlighted="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5lP-C4-9hM">
+                            <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5lP-C4-9hM">
                                 <rect key="frame" x="305" y="122.5" width="50" height="30"/>
                                 <state key="normal" title="Credits"/>
                                 <connections>
@@ -297,7 +297,7 @@
                                     <action selector="convertLengthToEnglish:" destination="X7w-tD-2PU" eventType="touchUpInside" id="Ihs-f1-zvW"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" highlighted="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="avi-bi-dbK">
+                            <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="avi-bi-dbK">
                                 <rect key="frame" x="310" y="155.5" width="44" height="30"/>
                                 <state key="normal" title="Metric"/>
                                 <connections>
