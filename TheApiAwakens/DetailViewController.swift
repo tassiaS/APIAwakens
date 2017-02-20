@@ -255,7 +255,7 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     @IBAction func convertCostToCredit(_ sender: Any) {
         exchangeTextField.isHidden = true
         exchangeLabel.isHidden = true
-        costLabel.text = String(valueSelectedTransportCraft.cost)
+        costValueLabel.text = String(valueSelectedTransportCraft.cost)
         usdButton.isSelected = false
         creditButton.isSelected = true
     }
@@ -284,7 +284,7 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        costLabel.text = String(valueSelectedTransportCraft.cost)
+        costValueLabel.text = String(valueSelectedTransportCraft.cost)
         return true
     }
     
@@ -308,8 +308,8 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     func doneButtonAction() {
         self.exchangeTextField.resignFirstResponder()
         if let exchangeRateValue = Int(exchangeTextField.text!) {
-            let newValue = Double(costLabel.text!)! * Double(exchangeRateValue)
-            costLabel.text = String(newValue)
+            let newValue = Double(costValueLabel.text!)! * Double(exchangeRateValue)
+            costValueLabel.text = String(newValue)
         }
     }
 }
