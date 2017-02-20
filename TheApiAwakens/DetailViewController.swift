@@ -233,6 +233,7 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        exchangeTextField.text = ""
         switch type {
         case .starship:
             setLabels(with: starships[row])
