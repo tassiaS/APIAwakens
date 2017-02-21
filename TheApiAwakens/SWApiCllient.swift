@@ -24,7 +24,7 @@ final class SWApiClient: APIClient {
     }
     
     
-    func fetchForStarship(nextPage: Int, completion: @escaping (APIResult<Starship>) -> Void) {
+    func fetchForStarship(nextPage: Int, completion: @escaping (APIResult<[Starship]>) -> Void) {
         var components = URLComponents(string: "http://swapi.co")!
         var queryItens = [URLQueryItem]()
         queryItens.append(URLQueryItem(name: "page", value: String(nextPage)))
@@ -43,7 +43,7 @@ final class SWApiClient: APIClient {
         }, completion: completion)
     }
     
-    func fetchForVehicle(nextPage: Int, completion: @escaping (APIResult<Vehicle>) -> Void) {
+    func fetchForVehicle(nextPage: Int, completion: @escaping (APIResult<[Vehicle]>) -> Void) {
         var components = URLComponents(string: "http://swapi.co")!
         var queryItens = [URLQueryItem]()
         queryItens.append(URLQueryItem(name: "page", value: String(nextPage)))
@@ -62,7 +62,7 @@ final class SWApiClient: APIClient {
         }, completion: completion)
     }
     
-    func fetchForCharacter(nextPage: Int, completion: @escaping (APIResult<Character>) -> Void) {
+    func fetchForCharacter(nextPage: Int, completion: @escaping (APIResult<[Character]>) -> Void) {
         var components = URLComponents(string: "http://swapi.co")!
         var queryItens = [URLQueryItem]()
         queryItens.append(URLQueryItem(name: "page", value: String(nextPage)))
@@ -78,6 +78,22 @@ final class SWApiClient: APIClient {
                 return nil
             }
             return characters.flatMap { return Character(JSON: $0) }
+        }, completion: completion)
+    }
+    
+    func fetchForPlanet(with id: String, completion: @escaping (APIResult<Planet>) -> Void) {
+        var components = URLComponents(string: "http://swapi.co")
+        components?.path = "/api/planets/\(id)\("/")"
+        let url = components?.url
+        
+        let request = URLRequest(url: url!)
+ 
+        fetch(request: request, parse: { (json) -> Planet? in
+            if let planet = Planet(JSON: json) {
+                return planet
+            } else {
+                return nil
+            }
         }, completion: completion)
     }
 

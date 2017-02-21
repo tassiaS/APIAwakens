@@ -28,8 +28,8 @@ protocol TransportCraft: Measurable {
 }
 
 enum APIResult<T> {
-    case success((resource: [T], hasPage: Bool))
-    case failuere(Error)
+    case success((resource: T, hasPage: Bool))
+    case failure(Error)
 }
 
 protocol APIClient {
@@ -37,7 +37,7 @@ protocol APIClient {
     var configuration: URLSessionConfiguration { get }
     
     func jsonTask(with request: URLRequest, completion: @escaping (JSON?, HTTPURLResponse?, Error?) -> Void) -> URLSessionDataTask
-    func fetch<T>(request: URLRequest, parse: @escaping (JSON) -> [T]? , completion: @escaping (APIResult<T>) -> Void)
+    func fetch<T>(request: URLRequest, parse: @escaping (JSON) -> T? , completion: @escaping (APIResult<T>) -> Void)
 }
 
 extension APIClient {
@@ -71,14 +71,14 @@ extension APIClient {
         return task
     }
 
-    func fetch<T>(request: URLRequest, parse: @escaping (JSON) -> [T]?, completion: @escaping (APIResult<T>) -> Void) {
+    func fetch<T>(request: URLRequest, parse: @escaping (JSON) -> T?, completion: @escaping (APIResult<T>) -> Void) {
         var hasNextPage = true
         let task = jsonTask(with: request) { (json, reponse, error) in
             
             DispatchQueue.main.async {
                 guard let json = json else {
                     if let error = error {
-                        completion(APIResult.failuere(error))
+                        completion(APIResult.failure(error))
                     }
                     return
                 }
@@ -92,7 +92,7 @@ extension APIClient {
                     }
                 } else {
                     let error = NSError(domain: "com.tassia.swapi.networkingError", code: 10, userInfo: nil)
-                    completion(APIResult.failuere(error))
+                    completion(APIResult.failure(error))
                 }
             }
         }

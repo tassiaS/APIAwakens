@@ -23,8 +23,6 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     @IBOutlet weak var classLabel: UILabel!
     @IBOutlet weak var crewLabel: UILabel!
     
-    
-    
     @IBOutlet weak var pickerView: UIPickerView!
     @IBOutlet weak var smallestLabel: UILabel!
     @IBOutlet weak var largestLabel: UILabel!
@@ -51,6 +49,8 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     var valueSelectedTransportCraft: TransportCraft!
     var exchangeRateValue = 0
     var isApiFirstCall = true
+    var planets = [Planet]()
+    var characterSelected: Character!
 
     var hasNextPage = true {
         didSet {
@@ -93,7 +93,7 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                         self?.setLabels(with: (self?.starships.first!)!)
                         self?.isApiFirstCall = false
                     }
-                case .failuere(let error):
+                case .failure(let error):
                     print(error)
             }
         })
@@ -116,7 +116,7 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                     self?.setLabels(with: (self?.vehicles.first!)!)
                     self?.isApiFirstCall = false
                 }
-            case .failuere(let error):
+            case .failure(let error):
                 print(error)
             }
         })
@@ -136,29 +136,42 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                 self?.pickerView.reloadAllComponents()
                 //set the first value since the user has not selected any row on the pickerView yet
                 if (self?.isApiFirstCall)! {
+                    self?.fetchForPlanet(with: (self?.characters.first?.homeworldID)!)
                     self?.setLabels(with: (self?.characters.first!)!)
                     self?.isApiFirstCall = false
                 }
-            case .failuere(let error):
+            case .failure(let error):
                 print(error)
             }
         })
+    }
+    
+    func fetchForPlanet(with id: String) {
+        swAPIClient.fetchForPlanet(with: id) { (result) in
+            switch result {
+            case .success(let result):
+                self.planets.append(result.resource)
+                self.setPlanetLabel()
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
 
     
     func setLabels(with valueSelected: TransportCraft) {
       switch type {
         case .starship:
-              let starship = getSize(from: starships)
+              let starship = getSmallestAndlargest(from: starships)
               smallestLabel.text = starship.smallest.name
               largestLabel.text = starship.largest.name
         case .vehicle:
-            let vehicle = getSize(from: vehicles)
+            let vehicle = getSmallestAndlargest(from: vehicles)
             smallestLabel.text = vehicle.smallest.name
             largestLabel.text = vehicle.largest.name
         case .character: break
         case .none: break
-        }
+    }
         
         self.valueSelectedTransportCraft = valueSelected
         self.valueSelectedAllTypes = valueSelected
@@ -175,9 +188,9 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         
         hideTransportCraftViews()
         
-        let character = getSize(from: characters)
-        smallestLabel.text = character.smallest.name
-        largestLabel.text = character.largest.name
+        let size = getSmallestAndlargest(from: characters)
+        smallestLabel.text = size.smallest.name
+        largestLabel.text = size.largest.name
         
 
         self.valueSelectedAllTypes = valueSelected
@@ -191,10 +204,26 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         
         nameValueLabel.text = valueSelected.name
         makeValueLabel.text = valueSelected.born
-        costValueLabel.text = "home"
         lengthValueLabel.text = String(valueSelected.size)
         classValueLabel.text = valueSelected.eyes
+        costValueLabel.text = "home"
         crewValueLabel.text = valueSelected.hair
+        
+        setPlanetLabel()
+    }
+    
+    func setPlanetLabel() {
+        
+        // first time, no character was selected yet
+        if planets.count == 1 {
+            costValueLabel.text = planets.first?.name
+        } else {
+            for planet in planets {
+                if characterSelected.homeworldID == planet.id {
+                    costValueLabel.text = planet.name
+                }
+            }
+        }
     }
 
     func hideTransportCraftViews() {
@@ -240,13 +269,15 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         case .vehicle:
             setLabels(with: vehicles[row])
         case .character:
-            setLabels(with: characters[row])
+            characterSelected = characters[row]
+            fetchForPlanet(with: characterSelected.homeworldID)
+            setLabels(with: characterSelected)
         default: break
         }
     }
     
     // Defines who is the smallest and largest
-    func getSize<T: Measurable>(from resource: [T]) -> (smallest: T, largest: T) {
+    func getSmallestAndlargest<T: Measurable>(from resource: [T]) -> (smallest: T, largest: T) {
         let largest = resource.max { a, b in a.size < b.size }
         let smallest = resource.min { a, b in a.size < b.size }
         return (smallest: smallest!, largest: largest!)

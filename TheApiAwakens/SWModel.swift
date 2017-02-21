@@ -128,9 +128,10 @@ struct Character: Measurable {
     var name: String
     var born: String
     var size: Double
-    //var home: String
+    //var home: Planet?
     var eyes: String
     var hair: String
+    var homeworldID: String
     
     init?(JSON: [String : AnyObject]) {
         
@@ -149,15 +150,35 @@ struct Character: Measurable {
         guard let hair = JSON["hair_color"] as? String else {
             return nil
         }
+        guard let homeworldEndPoint = JSON["homeworld"] else {
+            return nil
+        }
         
         self.name = name
         self.born = born
         self.eyes = eyes
         self.hair = hair
+        self.homeworldID = homeworldEndPoint.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
         
         let size = String(format:"%.2f", height.doubleValue)
         self.size = Double(size)!
+    }
+}
+
+struct Planet: JSONDecodable {
+    let name: String
+    let id: String
+    
+    init?(JSON: [String : AnyObject]) {
+        guard let name = JSON["name"] as? String else {
+            return nil
+        }
+        guard let url = JSON["url"] else {
+            return nil
+        }
         
+        self.name = name
+        self.id = url.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
     }
 }
 
