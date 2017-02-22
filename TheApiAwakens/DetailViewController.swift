@@ -206,7 +206,6 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         makeValueLabel.text = valueSelected.born
         lengthValueLabel.text = String(valueSelected.size)
         classValueLabel.text = valueSelected.eyes
-        costValueLabel.text = "home"
         crewValueLabel.text = valueSelected.hair
         
         setPlanetLabel()
@@ -263,6 +262,7 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         exchangeTextField.text = ""
+        costValueLabel.text = "     "
         switch type {
         case .starship:
             setLabels(with: starships[row])
