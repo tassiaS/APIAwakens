@@ -431,6 +431,8 @@
                         <outlet property="pickerView" destination="f2M-PI-MZr" id="Uyw-rw-Ipk"/>
                         <outlet property="smallestLabel" destination="e3Q-Tb-BvP" id="BYb-wf-BtH"/>
                         <outlet property="usdButton" destination="gyH-0X-61Z" id="soi-7z-Jfb"/>
+                        <outlet property="vehicleStarshipLabel" destination="HDt-dQ-bXU" id="Iwc-Ey-PPc"/>
+                        <outlet property="vehicleStarshipValueLabel" destination="xmC-Wl-wpj" id="SLg-h2-ofI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ein-mB-zhV" userLabel="First Responder" sceneMemberID="firstResponder"/>

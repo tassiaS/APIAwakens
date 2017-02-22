@@ -16,12 +16,14 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     @IBOutlet weak var lengthValueLabel: UILabel!
     @IBOutlet weak var classValueLabel: UILabel!
     @IBOutlet weak var crewValueLabel: UILabel!
+    @IBOutlet weak var vehicleStarshipValueLabel: UILabel!
     
     @IBOutlet weak var makeLabel: UILabel!
     @IBOutlet weak var costLabel: UILabel!
     @IBOutlet weak var lengthLabel: UILabel!
     @IBOutlet weak var classLabel: UILabel!
     @IBOutlet weak var crewLabel: UILabel!
+    @IBOutlet weak var vehicleStarshipLabel: UILabel!
     
     @IBOutlet weak var pickerView: UIPickerView!
     @IBOutlet weak var smallestLabel: UILabel!
@@ -69,9 +71,14 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
 
     func loadData() {
         switch type {
-            case .starship : fetchForStarship(with: nextPageNumber)
-            case .vehicle : fetchForVehicle(with: nextPageNumber)
-            case .character : fetchForCharacter(with: nextPageNumber)
+            case .starship :
+                hideCharacterLabels()
+                fetchForStarship(with: nextPageNumber)
+            case .vehicle :
+                hideCharacterLabels()
+                fetchForVehicle(with: nextPageNumber)
+            case .character :
+                fetchForCharacter(with: nextPageNumber)
             default: break
         }
     }
@@ -343,5 +350,15 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             let newValue = Double(costValueLabel.text!)! * Double(exchangeRateValue)
             costValueLabel.text = String(newValue)
         }
+    }
+    
+    func hideCharacterLabels() {
+        vehicleStarshipLabel.isHidden = true
+        vehicleStarshipValueLabel.isHidden = true
+    }
+    
+    func showCharacterLabels() {
+        vehicleStarshipLabel.isHidden = true
+        vehicleStarshipValueLabel.isHidden = true
     }
 }
