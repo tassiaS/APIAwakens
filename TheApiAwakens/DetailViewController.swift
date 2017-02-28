@@ -53,6 +53,9 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     var isApiFirstCall = true
     var planets = [Planet]()
     var characterSelected: Character!
+    var characterVehicles = [Vehicle]()
+    var vehiclesID = [String]()
+    var CharactersVehicleAndStarship = ""
 
     var hasNextPage = true {
         didSet {
@@ -105,7 +108,6 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             }
         })
     }
-    
     func fetchForVehicle(with page: Int) {
         swAPIClient.fetchForVehicle(nextPage: nextPageNumber, completion: { [weak self] (result) in
             switch result {
@@ -141,8 +143,14 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                     self?.pickerData.append(character.name)
                 }
                 self?.pickerView.reloadAllComponents()
+                
                 //set the first value since the user has not selected any row on the pickerView yet
                 if (self?.isApiFirstCall)! {
+                    if (self?.characters.first?.vehiclesID.first) != nil {
+                        self?.vehiclesID = (self?.characters.first?.vehiclesID)!
+                        self?.fetchForCharacterVehicle(with: (self?.vehiclesID)!)
+                    }
+                    
                     self?.fetchForPlanet(with: (self?.characters.first?.homeworldID)!)
                     self?.setLabels(with: (self?.characters.first!)!)
                     self?.isApiFirstCall = false
@@ -153,6 +161,24 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         })
     }
     
+    func fetchForCharacterStarship() {
+        
+    }
+    
+    func fetchForCharacterVehicle(with vehiclesID: [String]) {
+        for id in vehiclesID {
+            swAPIClient.fetchForCharacterVehicle(with: id) { (result) in
+                switch result {
+                case .failure(let error):
+                    print(error)
+                case .success(let result):
+                    self.characterVehicles.append(result.resource)
+                    self.setVehicleStarshipLabel()
+                }
+            }
+        }
+    }
+
     func fetchForPlanet(with id: String) {
         swAPIClient.fetchForPlanet(with: id) { (result) in
             switch result {
@@ -231,6 +257,15 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             }
         }
     }
+    
+    func setVehicleStarshipLabel() {
+        if vehiclesID.count == characterVehicles.count {
+            for vehicle in characterVehicles {
+                CharactersVehicleAndStarship += "\(vehicle.name),"
+            }
+            vehicleStarshipValueLabel.text = CharactersVehicleAndStarship
+        }
+    }
 
     func hideTransportCraftViews() {
         usdButton.isHidden = true
@@ -249,9 +284,6 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         if row > lastPickerViewIndex {
             lastPickerViewIndex = row
             if (objectQuantity - lastPickerViewIndex == 3) && hasNextPage {
-                print("lasIndex\(lastPickerViewIndex)")
-                print(hasNextPage)
-                print(nextPageNumber)
                 switch type {
                 case .starship:
                     fetchForStarship(with: nextPageNumber)

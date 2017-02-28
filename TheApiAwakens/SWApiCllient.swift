@@ -97,6 +97,26 @@ final class SWApiClient: APIClient {
         }, completion: completion)
     }
 
+    func fetchForCharacterStarhip() {
+        
+    }
+    
+    func fetchForCharacterVehicle(with vehicleID: String, completion: @escaping (APIResult<Vehicle>)-> Void) {
+        
+           var components = URLComponents(string: "http://swapi.co")
+            components?.path = "/api/vehicles/\(vehicleID)/"
+            
+            let url = components?.url
+            let request = URLRequest(url: url!)
+            
+            fetch(request: request, parse: { (json) -> Vehicle? in
+                if let vehicle = Vehicle(jsonName: json) {
+                    return vehicle
+                } else {
+                    return nil
+                }
+            }, completion: completion)
+    }
 
 }
 

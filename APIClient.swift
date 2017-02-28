@@ -57,7 +57,7 @@ extension APIClient {
                 switch HTTPResponse.statusCode {
                 case 200:
                     do {
-                        let json = try JSONSerialization.jsonObject(with: data!, options: []) as! [String : Any]
+                        let json = try JSONSerialization.jsonObject(with: data!, options: []) as! [String : AnyObject]
                         //print(json)
                         completion(json as JSON?, nil, nil)
                     } catch {

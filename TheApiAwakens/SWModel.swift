@@ -49,7 +49,7 @@ struct Vehicle: TransportCraft {
         guard let make = JSON["manufacturer"] as? String else {
             return nil
         }
-        guard let cost = JSON["cost_in_credits"] as? String, let costInCredits = Double(cost)  else {
+        guard let cost = JSON["cost_in_credits"] as? String, let costInCredits = Double(cost) else {
             return nil
         }
         guard let length = JSON["length"] as? String else {
@@ -74,6 +74,19 @@ struct Vehicle: TransportCraft {
         
         let size = String(format:"%.2f", length.doubleValue)
         self.size = Double(size)!
+    }
+    
+     init?(jsonName: [String : AnyObject]) {
+        guard let name = jsonName["name"] as? String else {
+            return nil
+        }
+        self.name = name
+        self.make = ""
+        self.cost = 0.0
+        self.swClass = ""
+        self.crew = ""
+        self.capacity = 0.0
+        self.size = 0.0
     }
 }
 
@@ -128,10 +141,11 @@ struct Character: Measurable {
     var name: String
     var born: String
     var size: Double
-    //var home: Planet?
     var eyes: String
     var hair: String
     var homeworldID: String
+    var vehiclesID = [String]()
+    var starshipsID = [String]()
     
     init?(JSON: [String : AnyObject]) {
         
@@ -153,12 +167,26 @@ struct Character: Measurable {
         guard let homeworldEndPoint = JSON["homeworld"] else {
             return nil
         }
+        guard let vehicleEndPoints = JSON["vehicles"] as? [String] else {
+            return nil
+        }
+        guard let starshipEndpoints = JSON["starships"] as? [String] else {
+            return nil
+        }
         
         self.name = name
         self.born = born
         self.eyes = eyes
         self.hair = hair
         self.homeworldID = homeworldEndPoint.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
+        
+        for vehicleEndPoint in vehicleEndPoints {
+            vehiclesID.append(vehicleEndPoint.components(separatedBy: CharacterSet.decimalDigits.inverted).joined())
+        }
+        
+        for starshipEndpoint in starshipEndpoints {
+            starshipsID.append(starshipEndpoint.components(separatedBy: CharacterSet.decimalDigits.inverted).joined())
+        }
         
         let size = String(format:"%.2f", height.doubleValue)
         self.size = Double(size)!
