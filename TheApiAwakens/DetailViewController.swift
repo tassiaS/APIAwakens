@@ -278,17 +278,21 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     func setVehicleStarshipLabel() {
         if vehiclesID.count == characterVehicles.count {
             vehiclesID = [String]()
+            var vehicleNames = [String]()
             for vehicle in characterVehicles {
-                charactersVehicleAndStarship += "\(vehicle.name), "
+                vehicleNames.append(vehicle.name)
             }
+            charactersVehicleAndStarship += vehicleNames.joined(separator: ", ")
             vehicleStarshipValueLabel.text = charactersVehicleAndStarship
         }
         
         if starshipsID.count == characterStarships.count {
             starshipsID = [String]()
+            var starshipNames = [String]()
             for starship in characterStarships {
-                charactersVehicleAndStarship += "\(starship.name), "
+                starshipNames.append(starship.name)
             }
+            charactersVehicleAndStarship += starshipNames.joined(separator: ", ")
             vehicleStarshipValueLabel.text = charactersVehicleAndStarship
         }
     }
