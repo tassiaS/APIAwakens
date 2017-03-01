@@ -151,11 +151,15 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                     if (self?.characters.first?.vehiclesID.first) != nil {
                         self?.vehiclesID = (self?.characters.first?.vehiclesID)!
                         self?.fetchForCharacterVehicle(with: (self?.vehiclesID)!)
+                    } else {
+                        self?.vehicleStarshipValueLabel.text = "None"
                     }
                     
                     if (self?.characters.first?.starshipsID.first) != nil {
                         self?.starshipsID = (self?.characters.first?.starshipsID)!
                         self?.fetchForCharacterStarship(with: (self?.starshipsID)!)
+                    } else {
+                        self?.vehicleStarshipValueLabel.text = "None"
                     }
 
                     self?.fetchForPlanet(with: (self?.characters.first?.homeworldID)!)
@@ -349,10 +353,14 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
 
             if characterSelected.vehiclesID.first != nil {
                 fetchForCharacterVehicle(with: vehiclesID)
+            } else {
+                vehicleStarshipValueLabel.text = "None"
             }
             
             if characterSelected.starshipsID.first != nil {
                 fetchForCharacterStarship(with: starshipsID)
+            } else {
+                vehicleStarshipValueLabel.text = "None"
             }
             fetchForPlanet(with: characterSelected.homeworldID)
             setLabels(with: characterSelected)

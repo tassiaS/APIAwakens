@@ -298,11 +298,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TheApiAwakens/DetailViewController.swift"
-            timestampString = "510058778.670166"
+            timestampString = "510081186.84731"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "160"
-            endingLineNumber = "160"
+            startingLineNumber = "164"
+            endingLineNumber = "164"
             landmarkName = "fetchForCharacter(with:)"
             landmarkType = "7">
             <Locations>
@@ -346,11 +346,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TheApiAwakens/DetailViewController.swift"
-            timestampString = "510058778.670166"
+            timestampString = "510081186.84731"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "179"
-            endingLineNumber = "179"
+            startingLineNumber = "183"
+            endingLineNumber = "183"
             landmarkName = "fetchForCharacterStarship(with:)"
             landmarkType = "7">
          </BreakpointContent>
