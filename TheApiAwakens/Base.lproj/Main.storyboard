@@ -223,8 +223,8 @@
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xmC-Wl-wpj">
-                                        <rect key="frame" x="158" y="24" width="42" height="20.5"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xmC-Wl-wpj">
+                                        <rect key="frame" x="158" y="24" width="209" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -232,6 +232,7 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="xmC-Wl-wpj" secondAttribute="trailing" constant="8" id="5Gu-vB-A1J"/>
                                     <constraint firstItem="HDt-dQ-bXU" firstAttribute="top" secondItem="mOB-yn-Ksm" secondAttribute="top" constant="24" id="Bl7-kx-plV"/>
                                     <constraint firstItem="xmC-Wl-wpj" firstAttribute="leading" secondItem="HDt-dQ-bXU" secondAttribute="trailing" constant="8.5" id="TlY-5X-VEg"/>
                                     <constraint firstItem="xmC-Wl-wpj" firstAttribute="top" secondItem="HDt-dQ-bXU" secondAttribute="top" id="f56-wA-spo"/>

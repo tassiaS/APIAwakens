@@ -260,8 +260,9 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     
     func setVehicleStarshipLabel() {
         if vehiclesID.count == characterVehicles.count {
+            CharactersVehicleAndStarship = ""
             for vehicle in characterVehicles {
-                CharactersVehicleAndStarship += "\(vehicle.name),"
+                CharactersVehicleAndStarship += "\(vehicle.name), "
             }
             vehicleStarshipValueLabel.text = CharactersVehicleAndStarship
         }
@@ -309,6 +310,13 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             setLabels(with: vehicles[row])
         case .character:
             characterSelected = characters[row]
+            vehicleStarshipValueLabel.text = ""
+            characterVehicles = [Vehicle]()
+            vehiclesID = characterSelected.vehiclesID
+
+            if characterSelected.vehiclesID.first != nil {
+                fetchForCharacterVehicle(with: vehiclesID)
+            }
             fetchForPlanet(with: characterSelected.homeworldID)
             setLabels(with: characterSelected)
         default: break
