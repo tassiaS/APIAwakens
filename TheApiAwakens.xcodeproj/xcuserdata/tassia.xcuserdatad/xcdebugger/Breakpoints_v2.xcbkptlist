@@ -74,92 +74,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TheApiAwakens/DetailViewController.swift"
-            timestampString = "510052278.913681"
+            timestampString = "510054940.432117"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "273"
-            endingLineNumber = "273"
-            landmarkName = "hideTransportCraftViews()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TheApiAwakens/DetailViewController.swift"
-            timestampString = "509981371.287931"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "189"
-            endingLineNumber = "189"
-            landmarkName = "fetchForPlanet(with:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TheApiAwakens/DetailViewController.swift"
-            timestampString = "509903224.580996"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "100"
-            endingLineNumber = "100"
+            startingLineNumber = "102"
+            endingLineNumber = "102"
             landmarkName = "fetchForStarship(with:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TheApiAwakens/DetailViewController.swift"
-            timestampString = "509981371.287931"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "193"
-            endingLineNumber = "193"
-            landmarkName = "DetailViewController"
-            landmarkType = "3">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TheApiAwakens/DetailViewController.swift"
-            timestampString = "510052278.913681"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "304"
-            endingLineNumber = "304"
-            landmarkName = "pickerView(_:didSelectRow:inComponent:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TheApiAwakens/DetailViewController.swift"
-            timestampString = "509903224.580996"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "165"
-            endingLineNumber = "165"
-            landmarkName = "fetchForCharacterStarship()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -192,22 +112,6 @@
             startingLineNumber = "89"
             endingLineNumber = "89"
             landmarkName = "fetch(request:parse:completion:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TheApiAwakens/DetailViewController.swift"
-            timestampString = "509979115.02638"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "171"
-            endingLineNumber = "171"
-            landmarkName = "fetchForCharacterVehicle(with:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -266,7 +170,7 @@
                   moduleName = "TheApiAwakens"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/tassia/Documents/TechdegreeProjects/MYprojects/TheApiAwakens/TheApiAwakens/SWModel.swift"
-                  timestampString = "509988772.023229"
+                  timestampString = "510055529.216629"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "52"
@@ -281,7 +185,7 @@
                   moduleName = "TheApiAwakens"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/tassia/Documents/TechdegreeProjects/MYprojects/TheApiAwakens/TheApiAwakens/SWModel.swift"
-                  timestampString = "509988772.026941"
+                  timestampString = "510055529.219586"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "52"
@@ -362,7 +266,7 @@
                   moduleName = "TheApiAwakens"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/tassia/Documents/TechdegreeProjects/MYprojects/TheApiAwakens/TheApiAwakens/SWModel.swift"
-                  timestampString = "509988772.050911"
+                  timestampString = "510055529.238324"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "64"
@@ -377,7 +281,7 @@
                   moduleName = "TheApiAwakens"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/tassia/Documents/TechdegreeProjects/MYprojects/TheApiAwakens/TheApiAwakens/SWModel.swift"
-                  timestampString = "509988772.053302"
+                  timestampString = "510055529.240577"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "64"
@@ -394,13 +298,45 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TheApiAwakens/DetailViewController.swift"
-            timestampString = "510052278.913681"
+            timestampString = "510055151.643479"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "267"
-            endingLineNumber = "267"
-            landmarkName = "setVehicleStarshipLabel()"
+            startingLineNumber = "158"
+            endingLineNumber = "158"
+            landmarkName = "fetchForCharacter(with:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TheApiAwakens.DetailViewController.(fetchForCharacter (with : Swift.Int) -&gt; ()).(closure #1)"
+                  moduleName = "TheApiAwakens"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/tassia/Documents/TechdegreeProjects/MYprojects/TheApiAwakens/TheApiAwakens/DetailViewController.swift"
+                  timestampString = "510055529.245715"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "158"
+                  endingLineNumber = "158"
+                  offsetFromSymbolStart = "6336">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TheApiAwakens.DetailViewController.(fetchForCharacter (with : Swift.Int) -&gt; ()).(closure #1)"
+                  moduleName = "TheApiAwakens"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/tassia/Documents/TechdegreeProjects/MYprojects/TheApiAwakens/TheApiAwakens/DetailViewController.swift"
+                  timestampString = "510055529.248963"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "158"
+                  endingLineNumber = "158"
+                  offsetFromSymbolStart = "8952">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -410,12 +346,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TheApiAwakens/DetailViewController.swift"
-            timestampString = "510052278.913681"
+            timestampString = "510055270.413454"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "319"
-            endingLineNumber = "319"
-            landmarkName = "pickerView(_:didSelectRow:inComponent:)"
+            startingLineNumber = "175"
+            endingLineNumber = "175"
+            landmarkName = "fetchForCharacterStarship(with:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -425,13 +361,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TheApiAwakens/DetailViewController.swift"
-            timestampString = "509988520.06149"
+            filePath = "TheApiAwakens/SWApiCllient.swift"
+            timestampString = "510055396.858615"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "176"
-            endingLineNumber = "176"
-            landmarkName = "fetchForCharacterVehicle(with:)"
+            startingLineNumber = "127"
+            endingLineNumber = "127"
+            landmarkName = "fetchForCharacterStarship(with:completion:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

@@ -117,7 +117,23 @@ final class SWApiClient: APIClient {
                 }
             }, completion: completion)
     }
-
+    
+    func fetchForCharacterStarship(with starshipID: String, completion: @escaping (APIResult<Starship>)-> Void) {
+        
+        var components = URLComponents(string: "http://swapi.co")
+        components?.path = "/api/starships/\(starshipID)/"
+        
+        let url = components?.url
+        let request = URLRequest(url: url!)
+        
+        fetch(request: request, parse: { (json) -> Starship? in
+            if let starship = Starship(jsonName: json) {
+                return starship
+            } else {
+                return nil
+            }
+        }, completion: completion)
+    }
 }
 
 

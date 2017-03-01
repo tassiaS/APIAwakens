@@ -134,8 +134,20 @@ struct Starship: TransportCraft {
         self.size = Double(size)!
 
     }
+    
+    init?(jsonName: [String : AnyObject]) {
+        guard let name = jsonName["name"] as? String else {
+            return nil
+        }
+        self.name = name
+        self.make = ""
+        self.cost = 0.0
+        self.swClass = ""
+        self.crew = ""
+        self.capacity = 0.0
+        self.size = 0.0
+    }
 }
-
 
 struct Character: Measurable {
     var name: String

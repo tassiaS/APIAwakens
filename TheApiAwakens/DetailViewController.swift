@@ -55,7 +55,9 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     var characterSelected: Character!
     var characterVehicles = [Vehicle]()
     var vehiclesID = [String]()
-    var CharactersVehicleAndStarship = ""
+    var charactersVehicleAndStarship = ""
+    var starshipsID = [String]()
+    var characterStarships = [Starship]()
 
     var hasNextPage = true {
         didSet {
@@ -151,6 +153,11 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                         self?.fetchForCharacterVehicle(with: (self?.vehiclesID)!)
                     }
                     
+                    if (self?.characters.first?.starshipsID.first) != nil {
+                        self?.starshipsID = (self?.characters.first?.starshipsID)!
+                        self?.fetchForCharacterStarship(with: (self?.starshipsID)!)
+                    }
+
                     self?.fetchForPlanet(with: (self?.characters.first?.homeworldID)!)
                     self?.setLabels(with: (self?.characters.first!)!)
                     self?.isApiFirstCall = false
@@ -161,8 +168,18 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         })
     }
     
-    func fetchForCharacterStarship() {
-        
+    func fetchForCharacterStarship(with starshipsID: [String]) {
+        for id in starshipsID {
+            swAPIClient.fetchForCharacterStarship(with: id) { (result) in
+                switch result {
+                case .failure(let error):
+                    print(error)
+                case .success(let result):
+                    self.characterStarships.append(result.resource)
+                    self.setVehicleStarshipLabel()
+                }
+            }
+        }
     }
     
     func fetchForCharacterVehicle(with vehiclesID: [String]) {
@@ -260,11 +277,17 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     
     func setVehicleStarshipLabel() {
         if vehiclesID.count == characterVehicles.count {
-            CharactersVehicleAndStarship = ""
             for vehicle in characterVehicles {
-                CharactersVehicleAndStarship += "\(vehicle.name), "
+                charactersVehicleAndStarship += "\(vehicle.name), "
             }
-            vehicleStarshipValueLabel.text = CharactersVehicleAndStarship
+            vehicleStarshipValueLabel.text = charactersVehicleAndStarship
+        }
+        
+        if starshipsID.count == characterStarships.count {
+            for starship in characterStarships {
+                charactersVehicleAndStarship += "\(starship.name), "
+            }
+            vehicleStarshipValueLabel.text = charactersVehicleAndStarship
         }
     }
 
@@ -311,11 +334,19 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         case .character:
             characterSelected = characters[row]
             vehicleStarshipValueLabel.text = ""
+            charactersVehicleAndStarship = ""
             characterVehicles = [Vehicle]()
             vehiclesID = characterSelected.vehiclesID
+            
+            characterStarships = [Starship]()
+            starshipsID = characterSelected.starshipsID
 
             if characterSelected.vehiclesID.first != nil {
                 fetchForCharacterVehicle(with: vehiclesID)
+            }
+            
+            if characterSelected.starshipsID.first != nil {
+                fetchForCharacterStarship(with: starshipsID)
             }
             fetchForPlanet(with: characterSelected.homeworldID)
             setLabels(with: characterSelected)
