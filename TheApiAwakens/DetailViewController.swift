@@ -258,7 +258,7 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         
         nameValueLabel.text = valueSelected.name
         makeValueLabel.text = valueSelected.born
-        lengthValueLabel.text = String(valueSelected.size)
+        lengthValueLabel.text = String(valueSelected.size.cleanValue)
         classValueLabel.text = valueSelected.eyes
         crewValueLabel.text = valueSelected.hair
         
