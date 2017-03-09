@@ -232,8 +232,8 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
 
         nameValueLabel.text = valueSelected.name
         makeValueLabel.text = valueSelected.make
-        costValueLabel.text = String(valueSelected.cost)
-        lengthValueLabel.text = String(valueSelected.size)
+        costValueLabel.text = String(valueSelected.cost.cleanValue)
+        lengthValueLabel.text = String(valueSelected.size.cleanValue)
         classValueLabel.text = valueSelected.swClass
         crewValueLabel.text = valueSelected.crew
     }
@@ -379,7 +379,7 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     @IBAction func convertCostToCredit(_ sender: Any) {
         exchangeTextField.isHidden = true
         exchangeLabel.isHidden = true
-        costValueLabel.text = String(valueSelectedTransportCraft.cost)
+        costValueLabel.text = String(valueSelectedTransportCraft.cost.cleanValue)
         usdButton.isSelected = false
         creditButton.isSelected = true
     }
@@ -404,7 +404,7 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
 
         metricButton.isSelected = true
         EnglishButton.isSelected = false
-        lengthValueLabel.text = String(format:"%.01f", totalValueToEnglish * 0.9144)
+        lengthValueLabel.text = (totalValueToEnglish * 0.9144).cleanValue
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
