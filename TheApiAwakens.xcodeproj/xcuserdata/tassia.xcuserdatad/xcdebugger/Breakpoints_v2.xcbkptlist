@@ -170,7 +170,7 @@
                   moduleName = "TheApiAwakens"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/tassia/Documents/TechdegreeProjects/MYprojects/TheApiAwakens/TheApiAwakens/SWModel.swift"
-                  timestampString = "510055529.216629"
+                  timestampString = "510844742.593596"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "52"
@@ -185,7 +185,7 @@
                   moduleName = "TheApiAwakens"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/tassia/Documents/TechdegreeProjects/MYprojects/TheApiAwakens/TheApiAwakens/SWModel.swift"
-                  timestampString = "510055529.219586"
+                  timestampString = "510844742.598257"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "52"
@@ -266,7 +266,7 @@
                   moduleName = "TheApiAwakens"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/tassia/Documents/TechdegreeProjects/MYprojects/TheApiAwakens/TheApiAwakens/SWModel.swift"
-                  timestampString = "510055529.238324"
+                  timestampString = "510844742.735748"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "64"
@@ -281,7 +281,7 @@
                   moduleName = "TheApiAwakens"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/tassia/Documents/TechdegreeProjects/MYprojects/TheApiAwakens/TheApiAwakens/SWModel.swift"
-                  timestampString = "510055529.240577"
+                  timestampString = "510844742.741555"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "64"
@@ -294,7 +294,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TheApiAwakens/DetailViewController.swift"
@@ -307,34 +307,34 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  shouldBeEnabled = "Yes"
+                  shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
                   symbolName = "TheApiAwakens.DetailViewController.(fetchForCharacter (with : Swift.Int) -&gt; ()).(closure #1)"
                   moduleName = "TheApiAwakens"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/tassia/Documents/TechdegreeProjects/MYprojects/TheApiAwakens/TheApiAwakens/DetailViewController.swift"
-                  timestampString = "510055529.245715"
+                  timestampString = "510843522.731073"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "158"
-                  endingLineNumber = "158"
-                  offsetFromSymbolStart = "6336">
+                  startingLineNumber = "165"
+                  endingLineNumber = "165"
+                  offsetFromSymbolStart = "7683">
                </Location>
                <Location
-                  shouldBeEnabled = "Yes"
+                  shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
                   symbolName = "TheApiAwakens.DetailViewController.(fetchForCharacter (with : Swift.Int) -&gt; ()).(closure #1)"
                   moduleName = "TheApiAwakens"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/tassia/Documents/TechdegreeProjects/MYprojects/TheApiAwakens/TheApiAwakens/DetailViewController.swift"
-                  timestampString = "510055529.248963"
+                  timestampString = "510843522.733693"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "158"
-                  endingLineNumber = "158"
-                  offsetFromSymbolStart = "8952">
+                  startingLineNumber = "165"
+                  endingLineNumber = "165"
+                  offsetFromSymbolStart = "9942">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -342,7 +342,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TheApiAwakens/DetailViewController.swift"
@@ -358,7 +358,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TheApiAwakens/SWApiCllient.swift"
@@ -368,6 +368,22 @@
             startingLineNumber = "127"
             endingLineNumber = "127"
             landmarkName = "fetchForCharacterStarship(with:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TheApiAwakens/DetailViewController.swift"
+            timestampString = "510844742.352159"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "411"
+            endingLineNumber = "411"
+            landmarkName = "convertLengthToMetric(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

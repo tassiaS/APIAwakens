@@ -336,6 +336,8 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         exchangeTextField.text = ""
         costValueLabel.text = "     "
+        EnglishButton.isSelected = false
+        metricButton.isSelected = true
         switch type {
         case .starship:
             setLabels(with: starships[row])
@@ -402,6 +404,9 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         exchangeTextField.isHidden = true
         exchangeLabel.isHidden = true
 
+        if metricButton.isSelected {
+            return
+        }
         metricButton.isSelected = true
         EnglishButton.isSelected = false
         lengthValueLabel.text = (totalValueToEnglish * 0.9144).cleanValue
