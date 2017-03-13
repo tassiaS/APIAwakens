@@ -28,10 +28,25 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate{
 
     func showDetailViewController(_ gestureRecognizer: UITapGestureRecognizer) {
         type = Resource.getType(with: (gestureRecognizer.view?.tag)!)
-        
-        let detailVC = storyboard?.instantiateViewController(withIdentifier: "detailViewController") as! DetailViewController
-        detailVC.type = self.type
-        navigationController?.pushViewController(detailVC, animated: true)
+        if isConnectedToNetwork() {
+            let detailVC = storyboard?.instantiateViewController(withIdentifier: "detailViewController") as! DetailViewController
+            detailVC.type = self.type
+            navigationController?.pushViewController(detailVC, animated: true)
+        }
     }
+    
+    func isConnectedToNetwork() -> Bool{
+        if Network.isConnectedToNetwork() == true {
+            print("Internet connection OK")
+            return true
+        } else {
+            let alert = UIAlertController(title: "Alert", message: "The Internet connection appears to be offline", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+            print("Internet connection FAILED")
+            return false
+        }
+    }
+
 }
 
