@@ -8,6 +8,9 @@
 
 import Foundation
 
+public let TREnetworkingErrorDomain = "com.treehouse.Stormy.NetwowrkingError"
+public let JsonKeyOrElementInvalid: Int = 20
+
 typealias JSON = [String: AnyObject]
 
 protocol JSONDecodable {
@@ -91,7 +94,7 @@ extension APIClient {
                         completion(APIResult.success((result,hasNextPage)))
                     }
                 } else {
-                    let error = NSError(domain: "com.tassia.swapi.networkingError", code: 10, userInfo: nil)
+                    let error = NSError(domain: TREnetworkingErrorDomain, code: JsonKeyOrElementInvalid, userInfo: nil)
                     completion(APIResult.failure(error))
                 }
             }

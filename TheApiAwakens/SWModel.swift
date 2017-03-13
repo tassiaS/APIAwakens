@@ -244,3 +244,7 @@ extension Double {
     }
 }
 
+enum DataError: Error {
+    case jsonKeyOrElementInvalid
+}
+

@@ -58,7 +58,12 @@ final class SWApiClient: APIClient {
             guard let vehicles = json["results"] as? [[String:AnyObject]] else {
                 return nil
             }
-            return vehicles.flatMap { return Vehicle(JSON: $0) }
+            var vehiclesFlatMap = vehicles.flatMap { return Vehicle(JSON: $0) }
+            if vehiclesFlatMap.isEmpty {
+                return nil
+            } else {
+                return vehiclesFlatMap
+            }
         }, completion: completion)
     }
     
