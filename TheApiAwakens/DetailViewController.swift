@@ -413,7 +413,16 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        costValueLabel.text = String(valueSelectedTransportCraft.cost)
+        let text = NSString(string: textField.text!).replacingCharacters(in: range, with: string)
+        
+        if text != "" {
+            if let text = Int(text) {
+                if Int(text) <= 0 {
+                    showAlert()
+                    return false
+                }
+            }
+        }
         return true
     }
     
@@ -450,5 +459,11 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     func showCharacterLabels() {
         vehicleStarshipLabel.isHidden = true
         vehicleStarshipValueLabel.isHidden = true
+    }
+    
+    func showAlert() {
+        var alert = UIAlertController(title: "Alert", message: "Exchange value must be higher than zero", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
 }
