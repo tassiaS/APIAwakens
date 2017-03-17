@@ -413,11 +413,12 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let text = NSString(string: textField.text!).replacingCharacters(in: range, with: string)
+        let textFieldText = NSString(string: textField.text!).replacingCharacters(in: range, with: string)
         
-        if text != "" {
-            if let text = Int(text) {
-                if Int(text) <= 0 {
+        if textFieldText != "" {
+            // I think I dont need it
+            if let text = Int(textFieldText) {
+                if text <= 0 {
                     showAlert()
                     return false
                 }
@@ -447,7 +448,7 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         self.exchangeTextField.resignFirstResponder()
         if let exchangeRateValue = Int(exchangeTextField.text!) {
             let newValue = Double(costValueLabel.text!)! * Double(exchangeRateValue)
-            costValueLabel.text = String(newValue)
+            costValueLabel.text = String(newValue.cleanValue)
         }
     }
     
@@ -462,8 +463,8 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     }
     
     func showAlert() {
-        var alert = UIAlertController(title: "Alert", message: "Exchange value must be higher than zero", preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
+        let alert = UIAlertController(title: "Alert", message: "Exchange value must be higher than zero", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
 }
