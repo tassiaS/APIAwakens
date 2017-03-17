@@ -27,7 +27,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate{
     }
 
     func showDetailViewController(_ gestureRecognizer: UITapGestureRecognizer) {
-        type = Resource.getType(with: (gestureRecognizer.view?.tag)!)
+        type = ResourceType.getType(with: (gestureRecognizer.view?.tag)!)
         if isConnectedToNetwork() {
             let detailVC = storyboard?.instantiateViewController(withIdentifier: "detailViewController") as! DetailViewController
             detailVC.type = self.type

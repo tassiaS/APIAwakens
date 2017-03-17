@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TheApiAwakens/SWModel.swift"
-            timestampString = "511094098.980524"
+            timestampString = "511460801.047334"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "47"
-            endingLineNumber = "47"
+            startingLineNumber = "62"
+            endingLineNumber = "62"
             landmarkName = "init(JSON:)"
             landmarkType = "7">
          </BreakpointContent>

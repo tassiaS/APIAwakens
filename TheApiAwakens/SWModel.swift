@@ -8,23 +8,20 @@
 
 import Foundation
 
-enum ResourceType {
+enum ResourceType: Int {
     case character
     case vehicle
     case starship
     case none
-}
-
-struct Resource {
-    static func getType(with imageTag: Int) -> ResourceType? {
-        let tagValue = String(imageTag)
+    
+    static func getType(with imageTag: Int = 0) -> ResourceType? {
         
-        switch tagValue {
-        case "0":
+        switch imageTag {
+        case 0:
             return .character
-        case "1":
+        case 1:
             return .vehicle
-        case "2":
+        case 2:
             return .starship
         default:
             return nil
@@ -239,12 +236,9 @@ extension String {
 }
 
 extension Double {
+    // If the decimal is 0 than return an Int
     var cleanValue: String {
         return self.truncatingRemainder(dividingBy: 1) == 0 ? String(format: "%.0f", self) : String(self)
     }
-}
-
-enum DataError: Error {
-    case jsonKeyOrElementInvalid
 }
 
