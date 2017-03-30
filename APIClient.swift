@@ -18,10 +18,16 @@ protocol JSONDecodable {
 }
 
 protocol Measurable: JSONDecodable{
+    
+    //Used for character, vehicle and starship
+    
     var size: Double { get }
 }
 
 protocol TransportCraft: Measurable {
+    
+    //Used only for vehicles and starships
+    
     var name: String { get }
     var make: String { get }
     var cost: Double { get }

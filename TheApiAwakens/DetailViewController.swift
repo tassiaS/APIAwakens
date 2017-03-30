@@ -30,7 +30,7 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     @IBOutlet weak var largestLabel: UILabel!
     @IBOutlet weak var usdButton: UIButton!
     @IBOutlet weak var creditButton: UIButton!
-    @IBOutlet weak var EnglishButton: UIButton!
+    @IBOutlet weak var englishButton: UIButton!
     @IBOutlet weak var metricButton: UIButton!
     @IBOutlet weak var exchangeLabel: UILabel!
     @IBOutlet weak var exchangeTextField: UITextField!
@@ -53,7 +53,7 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     var isApiFirstCall = true
     var planets = [Planet]()
     var characterSelected: Character!
-    var characterVehicles = [Vehicle]()
+    var charactersVehicles = [Vehicle]()
     var vehiclesID = [String]()
     var charactersVehicleAndStarship = ""
     var starshipsID = [String]()
@@ -77,12 +77,15 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     func loadData() {
         switch type {
             case .starship :
+                self.navigationItem.title = "Starship"
                 hideCharacterLabels()
                 fetchForStarship(with: nextPageNumber)
             case .vehicle :
+                self.navigationItem.title = "Vehicle"
                 hideCharacterLabels()
                 fetchForVehicle(with: nextPageNumber)
             case .character :
+                self.navigationItem.title = "Character"
                 fetchForCharacter(with: nextPageNumber)
             default: break
         }
@@ -193,7 +196,7 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                 case .failure(let error):
                     print(error)
                 case .success(let result):
-                    self.characterVehicles.append(result.resource)
+                    self.charactersVehicles.append(result.resource)
                     self.setVehicleStarshipLabel()
                 }
             }
@@ -280,10 +283,10 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     }
     
     func setVehicleStarshipLabel() {
-        if vehiclesID.count == characterVehicles.count {
+        if vehiclesID.count == charactersVehicles.count {
             vehiclesID = [String]()
             var vehicleNames = [String]()
-            for vehicle in characterVehicles {
+            for vehicle in charactersVehicles {
                 vehicleNames.append(vehicle.name)
             }
             charactersVehicleAndStarship += vehicleNames.joined(separator: ", ")
@@ -336,7 +339,7 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         exchangeTextField.text = ""
         costValueLabel.text = "     "
-        EnglishButton.isSelected = false
+        englishButton.isSelected = false
         metricButton.isSelected = true
         switch type {
         case .starship:
@@ -347,7 +350,7 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             characterSelected = characters[row]
             vehicleStarshipValueLabel.text = ""
             charactersVehicleAndStarship = ""
-            characterVehicles = [Vehicle]()
+            charactersVehicles = [Vehicle]()
             vehiclesID = characterSelected.vehiclesID
             
             characterStarships = [Starship]()
@@ -395,7 +398,7 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         exchangeTextField.isHidden = true
         exchangeLabel.isHidden = true
 
-        EnglishButton.isSelected = true
+        englishButton.isSelected = true
         metricButton.isSelected = false
         totalValueToEnglish = valueSelectedAllTypes.size / 0.9144
         lengthValueLabel.text = String(format:"%.01f", valueSelectedAllTypes.size / 0.9144)
@@ -408,7 +411,7 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             return
         }
         metricButton.isSelected = true
-        EnglishButton.isSelected = false
+        englishButton.isSelected = false
         lengthValueLabel.text = (totalValueToEnglish * 0.9144).cleanValue
     }
     

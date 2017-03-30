@@ -8,14 +8,13 @@
 
 import Foundation
 
-enum ResourceType: Int {
+enum ResourceType {
     case character
     case vehicle
     case starship
     case none
     
-    static func getType(with imageTag: Int = 0) -> ResourceType? {
-        
+    static func getType(with imageTag: Int ) -> ResourceType? {
         switch imageTag {
         case 0:
             return .character
