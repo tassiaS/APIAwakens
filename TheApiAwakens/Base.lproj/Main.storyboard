@@ -223,7 +223,7 @@
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xmC-Wl-wpj">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xmC-Wl-wpj">
                                         <rect key="frame" x="158" y="2" width="209" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <nil key="textColor"/>
@@ -422,7 +422,8 @@
                         <outlet property="crewValueLabel" destination="8ZW-tl-nxu" id="DMg-Oq-TQJ"/>
                         <outlet property="exchangeLabel" destination="VMZ-pe-1Ld" id="3rH-rV-rsb"/>
                         <outlet property="exchangeTextField" destination="lcK-vz-91k" id="h9J-3G-oER"/>
-                        <outlet property="largestLabel" destination="nEy-l9-JUJ" id="PHT-Dt-TS2"/>
+                        <outlet property="largestLabel" destination="ZVB-5K-efX" id="Qdt-cI-liv"/>
+                        <outlet property="largestLabelValue" destination="nEy-l9-JUJ" id="ncI-JB-UVy"/>
                         <outlet property="lengthLabel" destination="qJ9-8s-cnb" id="VX3-78-jsj"/>
                         <outlet property="lengthValueLabel" destination="hjW-Jl-LYA" id="n39-2I-ACc"/>
                         <outlet property="makeLabel" destination="WBu-HP-zzD" id="VVa-cb-zVI"/>
@@ -430,7 +431,8 @@
                         <outlet property="metricButton" destination="avi-bi-dbK" id="eY1-Q9-cof"/>
                         <outlet property="nameValueLabel" destination="X11-jG-adI" id="iwg-iv-Lc6"/>
                         <outlet property="pickerView" destination="f2M-PI-MZr" id="Uyw-rw-Ipk"/>
-                        <outlet property="smallestLabel" destination="e3Q-Tb-BvP" id="BYb-wf-BtH"/>
+                        <outlet property="smallestLabel" destination="ceg-1A-ACT" id="CMk-Ho-cmh"/>
+                        <outlet property="smallestLabelValue" destination="e3Q-Tb-BvP" id="vox-2r-R8K"/>
                         <outlet property="usdButton" destination="gyH-0X-61Z" id="soi-7z-Jfb"/>
                         <outlet property="vehicleStarshipLabel" destination="HDt-dQ-bXU" id="Iwc-Ey-PPc"/>
                         <outlet property="vehicleStarshipValueLabel" destination="xmC-Wl-wpj" id="WqH-ne-DcW"/>

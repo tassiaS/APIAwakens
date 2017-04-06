@@ -8,6 +8,44 @@
 
 import Foundation
 
+enum SWAwakens: Endpoint {
+    case Vehicle(nextPage: Int)
+    case Character(nextPage: Int)
+    case CharacterPlanet(planetId: String)
+    case CharacterStarship(starshipId: String)
+    case CharacterVehicle(VehicleId: String)
+    case Starship(nextPage: Int)
+    
+    var baseURL: String {
+        return "http://swapi.co"
+    }
+    var path: String {
+        switch self {
+        case .Starship:
+            return "/api/starships/"
+        case . Character:
+            return  "/api/people/"
+        case .CharacterPlanet(let planetId):
+            return "/api/planets/\(planetId)/"
+        case .CharacterVehicle(let vehicleId):
+            return "/api/vehicles/\(vehicleId)/"
+        case .CharacterStarship(let starshipId):
+            return "/api/starships/\(starshipId)/"
+        case .Vehicle:
+            return "/api/vehicles/"
+        }
+    }
+    var parameters: [String : Int]? {
+        var parameters = [String : Int]()
+        switch self {
+        case .Starship(let nextPage), .Character(let nextPage), .Vehicle(let nextPage):
+            parameters["name"] = nextPage
+            return parameters
+        default: return nil
+        }
+    }
+}
+
 final class SWApiClient: APIClient {
     
     var configuration: URLSessionConfiguration
@@ -25,17 +63,9 @@ final class SWApiClient: APIClient {
     
     
     func fetchForStarship(nextPage: Int, completion: @escaping (APIResult<[Starship]>) -> Void) {
-        var components = URLComponents(string: "http://swapi.co")!
-        var queryItens = [URLQueryItem]()
-        queryItens.append(URLQueryItem(name: "page", value: String(nextPage)))
-        components.path = "/api/starships/"
-        components.queryItems = queryItens
-        let url = components.url!
-       
-        let request = URLRequest(url: url)
+        let endpoint = SWAwakens.Starship(nextPage: nextPage)
         
-
-        fetch(request: request, parse: { (json) -> [Starship]? in
+        fetch(request: endpoint.request, parse: { (json) -> [Starship]? in
             guard let starships = json["results"] as? [[String:AnyObject]] else {
                 return nil
             }
@@ -44,21 +74,13 @@ final class SWApiClient: APIClient {
     }
     
     func fetchForVehicle(nextPage: Int, completion: @escaping (APIResult<[Vehicle]>) -> Void) {
-        var components = URLComponents(string: "http://swapi.co")!
-        var queryItens = [URLQueryItem]()
-        queryItens.append(URLQueryItem(name: "page", value: String(nextPage)))
-        components.path = "/api/vehicles/"
-        components.queryItems = queryItens
-        let url = components.url!
+        let endpoint = SWAwakens.Vehicle(nextPage: nextPage)
         
-        let request = URLRequest(url: url)
-        
-        
-        fetch(request: request, parse: { (json) -> [Vehicle]? in
+        fetch(request: endpoint.request, parse: { (json) -> [Vehicle]? in
             guard let vehicles = json["results"] as? [[String:AnyObject]] else {
                 return nil
             }
-            var vehiclesFlatMap = vehicles.flatMap { return Vehicle(JSON: $0) }
+            let vehiclesFlatMap = vehicles.flatMap { return Vehicle(JSON: $0) }
             if vehiclesFlatMap.isEmpty {
                 return nil
             } else {
@@ -68,17 +90,9 @@ final class SWApiClient: APIClient {
     }
     
     func fetchForCharacter(nextPage: Int, completion: @escaping (APIResult<[Character]>) -> Void) {
-        var components = URLComponents(string: "http://swapi.co")!
-        var queryItens = [URLQueryItem]()
-        queryItens.append(URLQueryItem(name: "page", value: String(nextPage)))
-        components.path = "/api/people/"
-        components.queryItems = queryItens
-        let url = components.url!
+        let endpoint = SWAwakens.Character(nextPage: nextPage)
         
-        let request = URLRequest(url: url)
-        
-        
-        fetch(request: request, parse: { (json) -> [Character]? in
+        fetch(request: endpoint.request, parse: { (json) -> [Character]? in
             guard let characters = json["results"] as? [[String:AnyObject]] else {
                 return nil
             }
@@ -86,14 +100,10 @@ final class SWApiClient: APIClient {
         }, completion: completion)
     }
     
-    func fetchForPlanet(with id: String, completion: @escaping (APIResult<Planet>) -> Void) {
-        var components = URLComponents(string: "http://swapi.co")
-        components?.path = "/api/planets/\(id)\("/")"
-        let url = components?.url
+    func fetchForCharacterPlanet(with planetId: String, completion: @escaping (APIResult<Planet>) -> Void) {
+        let endpoint = SWAwakens.CharacterPlanet(planetId: planetId)
         
-        let request = URLRequest(url: url!)
- 
-        fetch(request: request, parse: { (json) -> Planet? in
+        fetch(request: endpoint.request, parse: { (json) -> Planet? in
             if let planet = Planet(JSON: json) {
                 return planet
             } else {
@@ -101,20 +111,10 @@ final class SWApiClient: APIClient {
             }
         }, completion: completion)
     }
-
-    func fetchForCharacterStarhip() {
-        
-    }
     
-    func fetchForCharacterVehicle(with vehicleID: String, completion: @escaping (APIResult<Vehicle>)-> Void) {
-        
-           var components = URLComponents(string: "http://swapi.co")
-            components?.path = "/api/vehicles/\(vehicleID)/"
-            
-            let url = components?.url
-            let request = URLRequest(url: url!)
-            
-            fetch(request: request, parse: { (json) -> Vehicle? in
+    func fetchForCharacterVehicle(with vehicleId: String, completion: @escaping (APIResult<Vehicle>)-> Void) {
+            let endpoint = SWAwakens.CharacterVehicle(VehicleId: vehicleId)
+            fetch(request: endpoint.request, parse: { (json) -> Vehicle? in
                 if let vehicle = Vehicle(jsonName: json) {
                     return vehicle
                 } else {
@@ -123,15 +123,9 @@ final class SWApiClient: APIClient {
             }, completion: completion)
     }
     
-    func fetchForCharacterStarship(with starshipID: String, completion: @escaping (APIResult<Starship>)-> Void) {
-        
-        var components = URLComponents(string: "http://swapi.co")
-        components?.path = "/api/starships/\(starshipID)/"
-        
-        let url = components?.url
-        let request = URLRequest(url: url!)
-        
-        fetch(request: request, parse: { (json) -> Starship? in
+    func fetchForCharacterStarship(with starshipId: String, completion: @escaping (APIResult<Starship>)-> Void) {
+        let endpoint = SWAwakens.CharacterStarship(starshipId: starshipId)
+        fetch(request: endpoint.request, parse: { (json) -> Starship? in
             if let starship = Starship(jsonName: json) {
                 return starship
             } else {

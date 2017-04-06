@@ -25,9 +25,11 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     @IBOutlet weak var crewLabel: UILabel!
     @IBOutlet weak var vehicleStarshipLabel: UILabel!
     
-    @IBOutlet weak var pickerView: UIPickerView!
-    @IBOutlet weak var smallestLabel: UILabel!
     @IBOutlet weak var largestLabel: UILabel!
+    @IBOutlet weak var smallestLabel: UILabel!
+    @IBOutlet weak var pickerView: UIPickerView!
+    @IBOutlet weak var smallestLabelValue: UILabel!
+    @IBOutlet weak var largestLabelValue: UILabel!
     @IBOutlet weak var usdButton: UIButton!
     @IBOutlet weak var creditButton: UIButton!
     @IBOutlet weak var englishButton: UIButton!
@@ -35,6 +37,11 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     @IBOutlet weak var exchangeLabel: UILabel!
     @IBOutlet weak var exchangeTextField: UITextField!
     
+    
+    var didCharacterStarshipFinished = false
+    var didCharacterVehicleFinished = false
+    
+    var count = 0
     
     var totalValueToEnglish = 0.0
     var totalValueToMetric = 0.0
@@ -62,9 +69,9 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             setCharacterVehicleAndStarshipLabel()
         }
     }
-    var vehiclesID = [String]()
+    var vehiclesIDs = [String]()
     var charactersVehicleAndStarship = ""
-    var starshipsID = [String]()
+    var starshipsIDs = [String]()
     var characterStarships = [Starship]() {
         didSet {
             setCharacterVehicleAndStarshipLabel()
@@ -173,15 +180,15 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                 // Check if the character has any vehicle and fetch for it
                 if (self?.isApiFirstCall)! {
                     if (self?.characters.first?.vehiclesID.first) != nil {
-                        self?.vehiclesID = (firstCharacter!.vehiclesID)
-                        self?.fetchForCharacterVehicle(with: (self?.vehiclesID)!)
+                        self?.vehiclesIDs = (firstCharacter!.vehiclesID)
+                        self?.fetchForCharacterVehicle(with: (self?.vehiclesIDs)!)
                     } else {
                         self?.vehicleStarshipValueLabel.text = "None"
                     }
                 // Check if the character has any starship and fetch for it
                 if (self?.characters.first?.starshipsID.first) != nil {
-                        self?.starshipsID = (firstCharacter!.starshipsID)
-                        self?.fetchForCharacterStarship(with: (self?.starshipsID)!)
+                        self?.starshipsIDs = (firstCharacter!.starshipsID)
+                        self?.fetchForCharacterStarship(with: (self?.starshipsIDs)!)
                     } else {
                         self?.vehicleStarshipValueLabel.text = "None"
                     }
@@ -214,13 +221,14 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                 case .failure(let error):
                     print(error)
                 case .success(let result):
-                    self.charactersVehicles.append(result.resource)                }
+                    self.charactersVehicles.append(result.resource)
+                }
             }
         }
     }
 
     func fetchForPlanet(with id: String) {
-        swAPIClient.fetchForPlanet(with: id) { (result) in
+        swAPIClient.fetchForCharacterPlanet(with: id) { (result) in
             switch result {
             case .success(let result):
                 self.planets.append(result.resource)
@@ -234,12 +242,12 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
       switch type {
         case .starship:
               let starship = getSmallestAndlargest(from: starships)
-              smallestLabel.text = starship.smallest.name
-              largestLabel.text = starship.largest.name
+              smallestLabelValue.text = starship.smallest.name
+              largestLabelValue.text = starship.largest.name
         case .vehicle:
             let vehicle = getSmallestAndlargest(from: vehicles)
-            smallestLabel.text = vehicle.smallest.name
-            largestLabel.text = vehicle.largest.name
+            smallestLabelValue.text = vehicle.smallest.name
+            largestLabelValue.text = vehicle.largest.name
         case .character, .none: break
     }
         
@@ -259,8 +267,8 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         hideTransportCraftViews()
         
         let size = getSmallestAndlargest(from: characters)
-        smallestLabel.text = size.smallest.name
-        largestLabel.text = size.largest.name
+        smallestLabelValue.text = size.smallest.name
+        largestLabelValue.text = size.largest.name
         
 
         self.valueSelectedAllTypes = valueSelected
@@ -271,6 +279,8 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         lengthLabel.text = "Height"
         classLabel.text = "Eyes"
         crewLabel.text = "Hair"
+        smallestLabel.text = "Shortest"
+        largestLabel.text = "Tallest"
         
         nameValueLabel.text = valueSelected.name
         makeValueLabel.text = valueSelected.born
@@ -296,24 +306,58 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     }
     
     func setCharacterVehicleAndStarshipLabel() {
-        if vehiclesID.count == charactersVehicles.count {
-            vehiclesID = [String]()
+        var vehiclesNamesFormatted = ""
+        var starshipNamesFormatted = ""
+        // Update UI with character's vehicles only when all the vehicles were fetched
+        if vehiclesIDs.count == charactersVehicles.count {
+            didCharacterStarshipFinished = true
+            vehiclesIDs = [String]()
             var vehicleNames = [String]()
             for vehicle in charactersVehicles {
                 vehicleNames.append(vehicle.name)
             }
-            charactersVehicleAndStarship += vehicleNames.joined(separator: ", ")
-            vehicleStarshipValueLabel.text = charactersVehicleAndStarship
+            
+            if vehicleStarshipValueLabel.text == "" {
+                    vehiclesNamesFormatted += vehicleNames.joined(separator: ", ")
+                    vehiclesNamesFormatted += ","
+                    vehicleStarshipValueLabel.text = vehiclesNamesFormatted
+            } else {
+                vehiclesNamesFormatted += vehicleNames.joined(separator: ", ")
+                if vehicleStarshipValueLabel.text == "none" {
+                    if vehicleNames.count > 0 {
+                        vehicleStarshipValueLabel.text = vehiclesNamesFormatted
+                    }
+                } else {
+                    vehicleStarshipValueLabel.text = "\(vehicleStarshipValueLabel.text!)\(vehiclesNamesFormatted)"
+                }
+            }
         }
         
-        if starshipsID.count == characterStarships.count {
-            starshipsID = [String]()
+        // Update UI with character's starships only when all the vehicles were fetched
+        if starshipsIDs.count == characterStarships.count {
+            starshipsIDs = [String]()
             var starshipNames = [String]()
             for starship in characterStarships {
                 starshipNames.append(starship.name)
             }
-            charactersVehicleAndStarship += starshipNames.joined(separator: ", ")
-            vehicleStarshipValueLabel.text = charactersVehicleAndStarship
+            
+            if vehicleStarshipValueLabel.text == "" {
+                    starshipNamesFormatted += starshipNames.joined(separator: ", ")
+                if vehicleStarshipValueLabel.text != "none" {
+                    starshipNamesFormatted += ","
+                }
+                vehicleStarshipValueLabel.text = starshipNamesFormatted
+            } else {
+                starshipNamesFormatted += starshipNames.joined(separator: ", ")
+                if vehicleStarshipValueLabel.text == "none" {
+                    if starshipNames.count > 0 {
+                        vehicleStarshipValueLabel.text = starshipNamesFormatted
+                    }
+                } else {
+                    vehicleStarshipValueLabel.text = "\(vehicleStarshipValueLabel.text!)\(starshipNamesFormatted)"
+                }
+
+            }
         }
     }
 
@@ -361,24 +405,21 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             setLabels(with: vehicles[row])
         case .character:
             characterSelected = characters[row]
-            vehicleStarshipValueLabel.text = ""
-            charactersVehicleAndStarship = ""
-            charactersVehicles = [Vehicle]()
-            vehiclesID = characterSelected.vehiclesID
+            vehiclesIDs = characterSelected.vehiclesID
+            starshipsIDs = characterSelected.starshipsID
             
-            characterStarships = [Starship]()
-            starshipsID = characterSelected.starshipsID
+            cleanOldCharactersValues()
 
             if characterSelected.vehiclesID.first != nil {
-                fetchForCharacterVehicle(with: vehiclesID)
+                fetchForCharacterVehicle(with: vehiclesIDs)
             } else {
-                vehicleStarshipValueLabel.text = "None"
+                vehicleStarshipValueLabel.text = ResourceType.none.rawValue
             }
             
             if characterSelected.starshipsID.first != nil {
-                fetchForCharacterStarship(with: starshipsID)
+                fetchForCharacterStarship(with: starshipsIDs)
             } else {
-                vehicleStarshipValueLabel.text = "None"
+                vehicleStarshipValueLabel.text = ResourceType.none.rawValue
             }
             fetchForPlanet(with: characterSelected.homeworldID)
             setLabels(with: characterSelected)
@@ -393,7 +434,6 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         return (smallest: smallest!, largest: largest!)
     }
     
-    // Convert credit-USD / English-Metric
     @IBAction func convertCostToCredit(_ sender: Any) {
         exchangeTextField.isHidden = true
         exchangeLabel.isHidden = true
@@ -431,8 +471,8 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let textFieldText = NSString(string: textField.text!).replacingCharacters(in: range, with: string)
         
+        // if the value for exchange is <= 0 show an alert
         if textFieldText != "" {
-            // I think I dont need it
             if let text = Int(textFieldText) {
                 if text <= 0 {
                     showAlert()
@@ -482,5 +522,12 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         let alert = UIAlertController(title: "Alert", message: "Exchange value must be higher than zero", preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    func cleanOldCharactersValues() {
+        vehicleStarshipValueLabel.text = ""
+        charactersVehicleAndStarship = ""
+        charactersVehicles = [Vehicle]()
+        characterStarships = [Starship]()
     }
 }
