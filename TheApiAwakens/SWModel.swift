@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum ResourceType {
+enum ResourceType: String {
     case character
     case vehicle
     case starship

@@ -51,13 +51,25 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     var valueSelectedTransportCraft: TransportCraft!
     var exchangeRateValue = 0
     var isApiFirstCall = true
-    var planets = [Planet]()
+    var planets = [Planet]() {
+        didSet {
+            setCharactersPlanetLabel()
+        }
+    }
     var characterSelected: Character!
-    var charactersVehicles = [Vehicle]()
+    var charactersVehicles = [Vehicle]() {
+        didSet {
+            setCharacterVehicleAndStarshipLabel()
+        }
+    }
     var vehiclesID = [String]()
     var charactersVehicleAndStarship = ""
     var starshipsID = [String]()
-    var characterStarships = [Starship]()
+    var characterStarships = [Starship]() {
+        didSet {
+            setCharacterVehicleAndStarshipLabel()
+        }
+    }
 
     var hasNextPage = true {
         didSet {
@@ -77,15 +89,15 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     func loadData() {
         switch type {
             case .starship :
-                self.navigationItem.title = "Starship"
+                self.navigationItem.title = ResourceType.starship.rawValue
                 hideCharacterLabels()
                 fetchForStarship(with: nextPageNumber)
             case .vehicle :
-                self.navigationItem.title = "Vehicle"
+                self.navigationItem.title = ResourceType.vehicle.rawValue
                 hideCharacterLabels()
                 fetchForVehicle(with: nextPageNumber)
             case .character :
-                self.navigationItem.title = "Character"
+                self.navigationItem.title = ResourceType.character.rawValue
                 fetchForCharacter(with: nextPageNumber)
             default: break
         }
@@ -94,7 +106,10 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     func fetchForStarship(with page: Int) {
         swAPIClient.fetchForStarship(nextPage: nextPageNumber, completion: { [weak self] (result) in
             switch result {
+                case .failure(let error):
+                    print(error)
                 case .success(let result):
+                    // Update the pickerView with the result(array of starship)
                     self?.pickerData = [String]()
                     self?.starships += result.resource
                     self?.objectQuantity = (self?.starships.count)!
@@ -103,35 +118,36 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                         self?.pickerData.append(starship.name)
                     }
                     self?.pickerView.reloadAllComponents()
-                    //set the first value since the user has not selected any row on the pickerView yet
+                    
+                    //Set the labels with the info of the first Starship since the user has not selected any row on the pickerView yet
                     if (self?.isApiFirstCall)! {
                         self?.setLabels(with: (self?.starships.first!)!)
                         self?.isApiFirstCall = false
                     }
-                case .failure(let error):
-                    print(error)
             }
         })
     }
     func fetchForVehicle(with page: Int) {
         swAPIClient.fetchForVehicle(nextPage: nextPageNumber, completion: { [weak self] (result) in
             switch result {
-            case .success(let result):
-                self?.pickerData = [String]()
-                self?.vehicles += result.resource
-                self?.objectQuantity = (self?.vehicles.count)!
-                self?.hasNextPage = result.hasPage
-                for vehicle in (self?.vehicles)! {
+                case .failure(let error):
+                    print(error)
+                // Update the pickerView with the result(array of starship)
+                case .success(let result):
+                    self?.pickerData = [String]()
+                    self?.vehicles += result.resource
+                    self?.objectQuantity = (self?.vehicles.count)!
+                    self?.hasNextPage = result.hasPage
+                    for vehicle in (self?.vehicles)! {
                     self?.pickerData.append(vehicle.name)
                 }
                 self?.pickerView.reloadAllComponents()
-                //set the first value since the user has not selected any row on the pickerView yet
+                
+                //Set the labels with the info of the first Vehicle since the user has not selected any row on the pickerView yet
                 if (self?.isApiFirstCall)! {
                     self?.setLabels(with: (self?.vehicles.first!)!)
                     self?.isApiFirstCall = false
                 }
-            case .failure(let error):
-                print(error)
             }
         })
     }
@@ -139,7 +155,10 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     func fetchForCharacter(with page: Int) {
         swAPIClient.fetchForCharacter(nextPage: nextPageNumber, completion: { [weak self] (result) in
             switch result {
+            case .failure(let error):
+                print(error)
             case .success(let result):
+                // Update the pickerView with the result(array of starship)
                 self?.pickerData = [String]()
                 self?.characters += result.resource
                 self?.objectQuantity = (self?.characters.count)!
@@ -149,28 +168,28 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                 }
                 self?.pickerView.reloadAllComponents()
                 
-                //set the first value since the user has not selected any row on the pickerView yet
+                let firstCharacter = self?.characters.first!
+                
+                // Check if the character has any vehicle and fetch for it
                 if (self?.isApiFirstCall)! {
                     if (self?.characters.first?.vehiclesID.first) != nil {
-                        self?.vehiclesID = (self?.characters.first?.vehiclesID)!
+                        self?.vehiclesID = (firstCharacter!.vehiclesID)
                         self?.fetchForCharacterVehicle(with: (self?.vehiclesID)!)
                     } else {
                         self?.vehicleStarshipValueLabel.text = "None"
                     }
-                    
-                    if (self?.characters.first?.starshipsID.first) != nil {
-                        self?.starshipsID = (self?.characters.first?.starshipsID)!
+                // Check if the character has any starship and fetch for it
+                if (self?.characters.first?.starshipsID.first) != nil {
+                        self?.starshipsID = (firstCharacter!.starshipsID)
                         self?.fetchForCharacterStarship(with: (self?.starshipsID)!)
                     } else {
                         self?.vehicleStarshipValueLabel.text = "None"
                     }
-
-                    self?.fetchForPlanet(with: (self?.characters.first?.homeworldID)!)
-                    self?.setLabels(with: (self?.characters.first!)!)
-                    self?.isApiFirstCall = false
+                
+                self?.fetchForPlanet(with: (firstCharacter!.homeworldID))
+                self?.setLabels(with: (firstCharacter)!)
+                self?.isApiFirstCall = false
                 }
-            case .failure(let error):
-                print(error)
             }
         })
     }
@@ -183,7 +202,6 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                     print(error)
                 case .success(let result):
                     self.characterStarships.append(result.resource)
-                    self.setVehicleStarshipLabel()
                 }
             }
         }
@@ -196,9 +214,7 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                 case .failure(let error):
                     print(error)
                 case .success(let result):
-                    self.charactersVehicles.append(result.resource)
-                    self.setVehicleStarshipLabel()
-                }
+                    self.charactersVehicles.append(result.resource)                }
             }
         }
     }
@@ -208,14 +224,12 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             switch result {
             case .success(let result):
                 self.planets.append(result.resource)
-                self.setPlanetLabel()
             case .failure(let error):
                 print(error)
             }
         }
     }
 
-    
     func setLabels(with valueSelected: TransportCraft) {
       switch type {
         case .starship:
@@ -226,8 +240,7 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             let vehicle = getSmallestAndlargest(from: vehicles)
             smallestLabel.text = vehicle.smallest.name
             largestLabel.text = vehicle.largest.name
-        case .character: break
-        case .none: break
+        case .character, .none: break
     }
         
         self.valueSelectedTransportCraft = valueSelected
@@ -252,7 +265,7 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
 
         self.valueSelectedAllTypes = valueSelected
         
-        // Update label's text for character
+        //Change label's text, so character can use the same UI and Starship and Vehicle
         makeLabel.text = "Born"
         costLabel.text = "Home"
         lengthLabel.text = "Height"
@@ -265,10 +278,10 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         classValueLabel.text = valueSelected.eyes
         crewValueLabel.text = valueSelected.hair
         
-        setPlanetLabel()
+        setCharactersPlanetLabel()
     }
     
-    func setPlanetLabel() {
+    func setCharactersPlanetLabel() {
         
         // first time, no character was selected yet
         if planets.count == 1 {
@@ -282,7 +295,7 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         }
     }
     
-    func setVehicleStarshipLabel() {
+    func setCharacterVehicleAndStarshipLabel() {
         if vehiclesID.count == charactersVehicles.count {
             vehiclesID = [String]()
             var vehicleNames = [String]()
