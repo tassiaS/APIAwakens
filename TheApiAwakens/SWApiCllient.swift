@@ -39,7 +39,7 @@ enum SWAwakens: Endpoint {
         var parameters = [String : Int]()
         switch self {
         case .Starship(let nextPage), .Character(let nextPage), .Vehicle(let nextPage):
-            parameters["name"] = nextPage
+            parameters["page"] = nextPage
             return parameters
         default: return nil
         }
@@ -64,8 +64,9 @@ final class SWApiClient: APIClient {
     
     func fetchForStarship(nextPage: Int, completion: @escaping (APIResult<[Starship]>) -> Void) {
         let endpoint = SWAwakens.Starship(nextPage: nextPage)
+        let request = endpoint.request
         
-        fetch(request: endpoint.request, parse: { (json) -> [Starship]? in
+        fetch(request: request, parse: { (json) -> [Starship]? in
             guard let starships = json["results"] as? [[String:AnyObject]] else {
                 return nil
             }
@@ -80,7 +81,9 @@ final class SWApiClient: APIClient {
             guard let vehicles = json["results"] as? [[String:AnyObject]] else {
                 return nil
             }
+            
             let vehiclesFlatMap = vehicles.flatMap { return Vehicle(JSON: $0) }
+            
             if vehiclesFlatMap.isEmpty {
                 return nil
             } else {

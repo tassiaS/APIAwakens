@@ -111,7 +111,7 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     }
     
     func fetchForStarship(with page: Int) {
-        swAPIClient.fetchForStarship(nextPage: nextPageNumber, completion: { [weak self] (result) in
+        swAPIClient.fetchForStarship(nextPage: page, completion: { [weak self] (result) in
             switch result {
                 case .failure(let error):
                     print(error)
@@ -135,7 +135,7 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         })
     }
     func fetchForVehicle(with page: Int) {
-        swAPIClient.fetchForVehicle(nextPage: nextPageNumber, completion: { [weak self] (result) in
+        swAPIClient.fetchForVehicle(nextPage: page, completion: { [weak self] (result) in
             switch result {
                 case .failure(let error):
                     print(error)
@@ -160,7 +160,7 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     }
 
     func fetchForCharacter(with page: Int) {
-        swAPIClient.fetchForCharacter(nextPage: nextPageNumber, completion: { [weak self] (result) in
+        swAPIClient.fetchForCharacter(nextPage: page, completion: { [weak self] (result) in
             switch result {
             case .failure(let error):
                 print(error)
@@ -356,7 +356,6 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                 } else {
                     vehicleStarshipValueLabel.text = "\(vehicleStarshipValueLabel.text!)\(starshipNamesFormatted)"
                 }
-
             }
         }
     }
