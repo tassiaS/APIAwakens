@@ -48,7 +48,7 @@ struct Vehicle: TransportCraft {
         guard let cost = JSON["cost_in_credits"] as? String, let costInCredits = Double(cost) else {
             return nil
         }
-        guard let length = JSON["length"] as? String else {
+        guard let size = JSON["length"] as? String else {
             return nil
         }
         guard let swClass = JSON["vehicle_class"] as? String else {
@@ -68,10 +68,12 @@ struct Vehicle: TransportCraft {
         self.crew = crew
         self.capacity = cargoCapacity
         
-        let size = String(format:"%.2f", length.doubleValue)
-        self.size = Double(size)!
+        //doubleValue converts a string to Double. Cant use Double() because the api returns values both with . and ,
+        //let sizeDouble = String(format:"%.2f", size.doubleValue)
+        self.size = size.doubleValue
     }
     
+    // Used to initiate a Character's Vehicle that needs only a name
      init?(jsonName: [String : AnyObject]) {
         guard let name = jsonName["name"] as? String else {
             return nil
@@ -103,10 +105,10 @@ struct Starship: TransportCraft {
         guard let make = JSON["manufacturer"] as? String else {
             return nil
         }
-        guard let cost = JSON["cost_in_credits"] as? String, let costInCredits = Double(cost)  else {
+        guard let cost = JSON["cost_in_credits"] as? String, let costInCredits = Double(cost) else {
             return nil
         }
-        guard let length = JSON["length"] as? String else {
+        guard let size = JSON["length"] as? String else {
             return nil
         }
         guard let swClass = JSON["starship_class"] as? String else {
@@ -126,11 +128,12 @@ struct Starship: TransportCraft {
         self.crew = crew
         self.capacity = cargoCapacity
 
-        let size = String(format:"%.2f", length.doubleValue)
-        self.size = Double(size)!
+        //let size = String(format:"%.2f", size.doubleValue)
+        self.size = size.doubleValue
 
     }
     
+    // Used to initiate a Character's Starship that needs only a name
     init?(jsonName: [String : AnyObject]) {
         guard let name = jsonName["name"] as? String else {
             return nil
@@ -160,10 +163,10 @@ struct Character: Measurable {
         guard let name = JSON["name"] as? String else {
             return nil
         }
-        guard let height = JSON["height"] as? String else {
+        guard let born = JSON["birth_year"] as? String else {
             return nil
         }
-        guard let born = JSON["birth_year"] as? String else {
+        guard let size = JSON["height"] as? String, let _ = Double(size) else {
             return nil
         }
         guard let eyes = JSON["eye_color"] as? String else {
@@ -196,8 +199,8 @@ struct Character: Measurable {
             starshipsID.append(starshipEndpoint.components(separatedBy: CharacterSet.decimalDigits.inverted).joined())
         }
         
-        let size = String(format:"%.2f", height.doubleValue)
-        self.size = Double(size)!
+        let sizeFormatted = String(format:"%.2f", size.doubleValue)
+        self.size = Double(sizeFormatted)!
     }
 }
 
@@ -237,7 +240,8 @@ extension String {
 extension Double {
     // If the decimal is 0 than return an Int
     var cleanValue: String {
-        return self.truncatingRemainder(dividingBy: 1) == 0 ? String(format: "%.0f", self) : String(self)
+
+        return self.truncatingRemainder(dividingBy: 1) == 0 ? String(format: "%.0f", self) : String(format: "%.02f", self)
     }
 }
 

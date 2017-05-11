@@ -8,17 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		D21A9C941E27D0D700141CAF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21A9C931E27D0D700141CAF /* AppDelegate.swift */; };
-		D21A9C961E27D0D700141CAF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21A9C951E27D0D700141CAF /* ViewController.swift */; };
+		D21A9C961E27D0D700141CAF /* StarWarsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21A9C951E27D0D700141CAF /* StarWarsViewController.swift */; };
 		D21A9C991E27D0D700141CAF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D21A9C971E27D0D700141CAF /* Main.storyboard */; };
 		D21A9C9B1E27D0D700141CAF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D21A9C9A1E27D0D700141CAF /* Assets.xcassets */; };
 		D21A9C9E1E27D0D700141CAF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D21A9C9C1E27D0D700141CAF /* LaunchScreen.storyboard */; };
 		D21A9CA91E27D0D700141CAF /* TheApiAwakensTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21A9CA81E27D0D700141CAF /* TheApiAwakensTests.swift */; };
 		D21A9CB41E27D0D700141CAF /* TheApiAwakensUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21A9CB31E27D0D700141CAF /* TheApiAwakensUITests.swift */; };
-		D21A9CC21E29194D00141CAF /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21A9CC11E29194D00141CAF /* DetailViewController.swift */; };
+		D21A9CC21E29194D00141CAF /* StarWarsDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21A9CC11E29194D00141CAF /* StarWarsDetailViewController.swift */; };
 		D255EF2C1E76D55A0092602D /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = D255EF2B1E76D55A0092602D /* Network.swift */; };
 		D28E36651E2FBF1A00CE603A /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D28E36641E2FBF1A00CE603A /* APIClient.swift */; };
-		D28E36671E305B0000CE603A /* SWApiCllient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D28E36661E305B0000CE603A /* SWApiCllient.swift */; };
-		D28E36691E3064C400CE603A /* SWModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D28E36681E3064C400CE603A /* SWModel.swift */; };
+		D28E36671E305B0000CE603A /* StarWarsApiCllient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D28E36661E305B0000CE603A /* StarWarsApiCllient.swift */; };
+		D28E36691E3064C400CE603A /* StarWarsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D28E36681E3064C400CE603A /* StarWarsModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,7 +41,7 @@
 /* Begin PBXFileReference section */
 		D21A9C901E27D0D700141CAF /* TheApiAwakens.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TheApiAwakens.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D21A9C931E27D0D700141CAF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		D21A9C951E27D0D700141CAF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		D21A9C951E27D0D700141CAF /* StarWarsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarWarsViewController.swift; sourceTree = "<group>"; };
 		D21A9C981E27D0D700141CAF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D21A9C9A1E27D0D700141CAF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D21A9C9D1E27D0D700141CAF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -52,11 +52,11 @@
 		D21A9CAF1E27D0D700141CAF /* TheApiAwakensUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TheApiAwakensUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D21A9CB31E27D0D700141CAF /* TheApiAwakensUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TheApiAwakensUITests.swift; sourceTree = "<group>"; };
 		D21A9CB51E27D0D700141CAF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D21A9CC11E29194D00141CAF /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		D21A9CC11E29194D00141CAF /* StarWarsDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarWarsDetailViewController.swift; sourceTree = "<group>"; };
 		D255EF2B1E76D55A0092602D /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		D28E36641E2FBF1A00CE603A /* APIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = APIClient.swift; path = ../APIClient.swift; sourceTree = "<group>"; };
-		D28E36661E305B0000CE603A /* SWApiCllient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SWApiCllient.swift; sourceTree = "<group>"; };
-		D28E36681E3064C400CE603A /* SWModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SWModel.swift; sourceTree = "<group>"; };
+		D28E36661E305B0000CE603A /* StarWarsApiCllient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarWarsApiCllient.swift; sourceTree = "<group>"; };
+		D28E36681E3064C400CE603A /* StarWarsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarWarsModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,11 +108,11 @@
 			isa = PBXGroup;
 			children = (
 				D21A9C931E27D0D700141CAF /* AppDelegate.swift */,
-				D21A9C951E27D0D700141CAF /* ViewController.swift */,
-				D21A9CC11E29194D00141CAF /* DetailViewController.swift */,
+				D21A9C951E27D0D700141CAF /* StarWarsViewController.swift */,
+				D21A9CC11E29194D00141CAF /* StarWarsDetailViewController.swift */,
 				D28E36641E2FBF1A00CE603A /* APIClient.swift */,
-				D28E36661E305B0000CE603A /* SWApiCllient.swift */,
-				D28E36681E3064C400CE603A /* SWModel.swift */,
+				D28E36661E305B0000CE603A /* StarWarsApiCllient.swift */,
+				D28E36681E3064C400CE603A /* StarWarsModel.swift */,
 				D255EF2B1E76D55A0092602D /* Network.swift */,
 				D21A9C971E27D0D700141CAF /* Main.storyboard */,
 				D21A9C9A1E27D0D700141CAF /* Assets.xcassets */,
@@ -275,13 +275,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D21A9CC21E29194D00141CAF /* DetailViewController.swift in Sources */,
-				D21A9C961E27D0D700141CAF /* ViewController.swift in Sources */,
-				D28E36671E305B0000CE603A /* SWApiCllient.swift in Sources */,
+				D21A9CC21E29194D00141CAF /* StarWarsDetailViewController.swift in Sources */,
+				D21A9C961E27D0D700141CAF /* StarWarsViewController.swift in Sources */,
+				D28E36671E305B0000CE603A /* StarWarsApiCllient.swift in Sources */,
 				D21A9C941E27D0D700141CAF /* AppDelegate.swift in Sources */,
 				D28E36651E2FBF1A00CE603A /* APIClient.swift in Sources */,
 				D255EF2C1E76D55A0092602D /* Network.swift in Sources */,
-				D28E36691E3064C400CE603A /* SWModel.swift in Sources */,
+				D28E36691E3064C400CE603A /* StarWarsModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

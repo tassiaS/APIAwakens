@@ -95,7 +95,10 @@ final class SWApiClient: APIClient {
     func fetchForCharacter(nextPage: Int, completion: @escaping (APIResult<[Character]>) -> Void) {
         let endpoint = SWAwakens.Character(nextPage: nextPage)
         
+        
         fetch(request: endpoint.request, parse: { (json) -> [Character]? in
+            print(endpoint.request.url?.absoluteString)
+
             guard let characters = json["results"] as? [[String:AnyObject]] else {
                 return nil
             }

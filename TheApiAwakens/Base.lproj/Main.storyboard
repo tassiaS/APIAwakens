@@ -412,7 +412,8 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="EnglishButton" destination="h09-UZ-y7a" id="qan-Mm-cFL"/>
+                        <outlet property="charactersVehicleStarshipLabel" destination="HDt-dQ-bXU" id="31t-lC-bvB"/>
+                        <outlet property="charactersVehicleStarshipValueLabel" destination="xmC-Wl-wpj" id="ybW-xu-dga"/>
                         <outlet property="classLabel" destination="178-QB-LV3" id="mqn-si-eTr"/>
                         <outlet property="classValueLabel" destination="vTd-Ur-Cw4" id="KyM-BO-ZUU"/>
                         <outlet property="costLabel" destination="CJh-5k-4JE" id="j8i-iE-6cF"/>
@@ -420,8 +421,9 @@
                         <outlet property="creditButton" destination="5lP-C4-9hM" id="fHG-O2-uOa"/>
                         <outlet property="crewLabel" destination="dmq-6k-Wc7" id="7kN-6J-33h"/>
                         <outlet property="crewValueLabel" destination="8ZW-tl-nxu" id="DMg-Oq-TQJ"/>
-                        <outlet property="exchangeLabel" destination="VMZ-pe-1Ld" id="3rH-rV-rsb"/>
-                        <outlet property="exchangeTextField" destination="lcK-vz-91k" id="h9J-3G-oER"/>
+                        <outlet property="englishButton" destination="h09-UZ-y7a" id="f71-MF-AD7"/>
+                        <outlet property="exchangeLabel" destination="VMZ-pe-1Ld" id="qUP-WA-CCV"/>
+                        <outlet property="exchangeTextField" destination="lcK-vz-91k" id="DL4-ld-R0Y"/>
                         <outlet property="largestLabel" destination="ZVB-5K-efX" id="Qdt-cI-liv"/>
                         <outlet property="largestLabelValue" destination="nEy-l9-JUJ" id="ncI-JB-UVy"/>
                         <outlet property="lengthLabel" destination="qJ9-8s-cnb" id="VX3-78-jsj"/>
@@ -434,8 +436,6 @@
                         <outlet property="smallestLabel" destination="ceg-1A-ACT" id="CMk-Ho-cmh"/>
                         <outlet property="smallestLabelValue" destination="e3Q-Tb-BvP" id="vox-2r-R8K"/>
                         <outlet property="usdButton" destination="gyH-0X-61Z" id="soi-7z-Jfb"/>
-                        <outlet property="vehicleStarshipLabel" destination="HDt-dQ-bXU" id="Iwc-Ey-PPc"/>
-                        <outlet property="vehicleStarshipValueLabel" destination="xmC-Wl-wpj" id="WqH-ne-DcW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ein-mB-zhV" userLabel="First Responder" sceneMemberID="firstResponder"/>

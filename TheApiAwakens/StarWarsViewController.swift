@@ -17,21 +17,27 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Add tapGestureRecognizer to imageViews
+        
         let stackViews = [characterStackview, vehicleStackView, starshipStackview]
+        
         for stackView in stackViews {
-            let recognizer = UITapGestureRecognizer(target: self, action: #selector(showDetailViewController(_:)))
-            recognizer.delegate = self
+            let recognizer = UITapGestureRecognizer(target: self, action: #selector(showSWDetailViewController(_:)))
             stackView?.addGestureRecognizer(recognizer)
         }
     }
 
-    func showDetailViewController(_ gestureRecognizer: UITapGestureRecognizer) {
+    func showSWDetailViewController(_ gestureRecognizer: UITapGestureRecognizer) {
         type = ResourceType.getType(with: (gestureRecognizer.view?.tag)!)
-        if isConnectedToNetwork() {
+        
+        if Network.isConnectedToNetwork() {
             let detailVC = storyboard?.instantiateViewController(withIdentifier: "detailViewController") as! DetailViewController
             detailVC.type = self.type
             navigationController?.pushViewController(detailVC, animated: true)
+        } else {
+            let alert = UIAlertController(title: "Alert", message: "The Internet connection appears to be offline", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+            print("Internet connection FAILED")
         }
     }
     
@@ -47,6 +53,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate{
             return false
         }
     }
+
 
 }
 
