@@ -183,9 +183,14 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         nameValueLabel.text = valueSelected.name
         makeValueLabel.text = valueSelected.make
         costValueLabel.text = String(valueSelected.cost.cleanValue)
-        lengthValueLabel.text = String(valueSelected.size.cleanValue)
-        classValueLabel.text = valueSelected.swClass
         crewValueLabel.text = valueSelected.crew
+        classValueLabel.text = valueSelected.swClass
+        
+        if valueSelected.size == 0 {
+            lengthValueLabel.text = "Unknown"
+        } else {
+            lengthValueLabel.text = String(valueSelected.size.cleanValue)
+        }
     }
 
     func fetchForCharacter(with page: Int) {
@@ -219,17 +224,17 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                     } else {
                         self?.charactersVehicleStarshipValueLabel.text = "None"
                     }
-                // Check if character has any starship and fetch for it
-                if (self?.characters.first?.starshipsID.first) != nil {
+                    // Check if character has any starship and fetch for it
+                    if (self?.characters.first?.starshipsID.first) != nil {
                         self?.starshipsIDs = (firstCharacter!.starshipsID)
                         self?.fetchForCharacterStarship(with: (self?.starshipsIDs)!)
                     } else {
                         self?.charactersVehicleStarshipValueLabel.text = "None"
                     }
                 
-                self?.fetchForPlanet(with: (firstCharacter!.homeworldID))
-                self?.setLabels(with: (firstCharacter)!)
-                self?.isApiFirstCall = false
+                    self?.fetchForPlanet(with: (firstCharacter!.homeworldID))
+                    self?.setLabels(with: (firstCharacter)!)
+                    self?.isApiFirstCall = false
                 }
             }
         })
@@ -294,9 +299,14 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         
         nameValueLabel.text = valueSelected.name
         makeValueLabel.text = valueSelected.born
-        lengthValueLabel.text = String(valueSelected.size.cleanValue)
         classValueLabel.text = valueSelected.eyes
         crewValueLabel.text = valueSelected.hair
+        
+        if valueSelected.size == 0 {
+            lengthValueLabel.text = "Unknown"
+        } else {
+            lengthValueLabel.text = String(valueSelected.size.cleanValue)
+        }
         
         setCharactersPlanetLabel()
     }
@@ -438,9 +448,19 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     
     // Defines who is the smallest and largest
     func getSmallestAndlargest<T: Measurable>(from resource: [T]) -> (smallest: T, largest: T) {
-        let largest = resource.max { a, b in a.size < b.size }
+        
+        // DOn't use sizes which the value is = 0. 0 means that the size is unknown 
+        let resourceFiltered = resource.filter { (Measurable) -> Bool in
+            if Measurable.size != 0 {
+                return true
+            } else {
+                return false
+            }
+        }
+        
+        let largest = resourceFiltered.max { a, b in a.size < b.size }
         //print(largest)
-        let smallest = resource.min { a, b in a.size < b.size }
+        let smallest = resourceFiltered.min { a, b in a.size < b.size }
         return (smallest: smallest!, largest: largest!)
     }
     

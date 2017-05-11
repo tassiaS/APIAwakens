@@ -68,8 +68,7 @@ struct Vehicle: TransportCraft {
         self.crew = crew
         self.capacity = cargoCapacity
         
-        //doubleValue converts a string to Double. Cant use Double() because the api returns values both with . and ,
-        //let sizeDouble = String(format:"%.2f", size.doubleValue)
+        //doubleValue converts a string to Double. Cant use Double() because the SWapi returns values both with "." and "," Values with "," are not converted to Double.
         self.size = size.doubleValue
     }
     
@@ -128,7 +127,6 @@ struct Starship: TransportCraft {
         self.crew = crew
         self.capacity = cargoCapacity
 
-        //let size = String(format:"%.2f", size.doubleValue)
         self.size = size.doubleValue
 
     }
@@ -166,7 +164,7 @@ struct Character: Measurable {
         guard let born = JSON["birth_year"] as? String else {
             return nil
         }
-        guard let size = JSON["height"] as? String, let _ = Double(size) else {
+        guard let size = JSON["height"] as? String else {
             return nil
         }
         guard let eyes = JSON["eye_color"] as? String else {
@@ -199,8 +197,8 @@ struct Character: Measurable {
             starshipsID.append(starshipEndpoint.components(separatedBy: CharacterSet.decimalDigits.inverted).joined())
         }
         
-        let sizeFormatted = String(format:"%.2f", size.doubleValue)
-        self.size = Double(sizeFormatted)!
+        //let sizeFormatted = String(format:"%.2f", size.doubleValue)
+        self.size = size.doubleValue
     }
 }
 
@@ -221,6 +219,7 @@ struct Planet: JSONDecodable {
     }
 }
 
+// returns a double for Strings with both "." and ","
 extension String {
     static let numberFormatter = NumberFormatter()
     var doubleValue: Double {

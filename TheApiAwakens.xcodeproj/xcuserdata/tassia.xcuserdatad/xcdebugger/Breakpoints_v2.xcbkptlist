@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TheApiAwakens/StarWarsDetailViewController.swift"
-            timestampString = "515948533.007369"
+            timestampString = "516199098.125624"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "205"
-            endingLineNumber = "205"
+            startingLineNumber = "210"
+            endingLineNumber = "210"
             landmarkName = "fetchForCharacter(with:)"
             landmarkType = "7">
          </BreakpointContent>
