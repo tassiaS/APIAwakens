@@ -8,6 +8,35 @@
 
 import Foundation
 
+protocol Endpoint {
+    var baseURL: String { get }
+    var path: String { get }
+    var parameters: [String: Int]? { get }
+}
+
+extension Endpoint {
+    var queryItems: [URLQueryItem] {
+        var queryItems = [URLQueryItem]()
+        
+        if let parameters = parameters {
+            for (key, value) in parameters {
+                let queryItem = URLQueryItem(name: key, value: "\(value)")
+                queryItems.append(queryItem)
+            }
+        }
+        return queryItems
+    }
+    
+    var request: URLRequest {
+        let components = NSURLComponents(string: baseURL)!
+        components.path = path
+        components.queryItems = queryItems // the URL is percent encoded here
+        
+        let url = components.url!
+        return URLRequest(url: url)
+    }
+}
+
 enum SWAwakens: Endpoint {
     case Vehicle(nextPage: Int)
     case Character(nextPage: Int)
@@ -70,7 +99,14 @@ final class SWApiClient: APIClient {
             guard let starships = json["results"] as? [[String:AnyObject]] else {
                 return nil
             }
-            return starships.flatMap { return Starship(JSON: $0) }
+            return starships.flatMap {
+                do {
+                    return try Starship(JSON: $0)
+                } catch (let error){
+                    print(error)
+                }
+                return nil
+            }
         }, completion: completion)
     }
     
@@ -82,7 +118,14 @@ final class SWApiClient: APIClient {
                 return nil
             }
             
-            let vehiclesFlatMap = vehicles.flatMap { return Vehicle(JSON: $0) }
+            let vehiclesFlatMap: [Vehicle] = vehicles.flatMap {
+                do {
+                   return try Vehicle(JSON: $0)
+                } catch (let error){
+                    print(error)
+                }
+                return nil
+            }
             
             if vehiclesFlatMap.isEmpty {
                 return nil
@@ -97,12 +140,19 @@ final class SWApiClient: APIClient {
         
         
         fetch(request: endpoint.request, parse: { (json) -> [Character]? in
-            print(endpoint.request.url?.absoluteString)
+            print(endpoint.request.url?.absoluteString as Any)
 
             guard let characters = json["results"] as? [[String:AnyObject]] else {
                 return nil
             }
-            return characters.flatMap { return Character(JSON: $0) }
+            return characters.flatMap {
+                do {
+                    return try Character(JSON: $0)
+                } catch (let error){
+                    print(error)
+                }
+                return nil
+            }
         }, completion: completion)
     }
     
@@ -110,11 +160,12 @@ final class SWApiClient: APIClient {
         let endpoint = SWAwakens.CharacterPlanet(planetId: planetId)
         
         fetch(request: endpoint.request, parse: { (json) -> Planet? in
-            if let planet = Planet(JSON: json) {
-                return planet
-            } else {
-                return nil
+            do {
+                return try Planet(JSON: json)
+            } catch (let error){
+                print(error)
             }
+            return nil
         }, completion: completion)
     }
     

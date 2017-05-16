@@ -107,6 +107,11 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         }
     }
     
+    func hideCharacterLabels() {
+        charactersVehicleStarshipLabel.isHidden = true
+        charactersVehicleStarshipValueLabel.isHidden = true
+    }
+    
     func fetchForStarship(with page: Int) {
         swAPIClient.fetchForStarship(nextPage: page, completion: { [weak self] (result) in
             switch result {
@@ -125,7 +130,7 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                     }
                     self?.pickerView.reloadAllComponents()
                     
-                    //Set labels with first element of the array since the user has not selected any row on the pickerView yet
+                    //Set labels with first element of the array since the user has not selected any row of the pickerView yet
                     if (self?.isApiFirstCall)! {
                         self?.setLabels(with: (self?.starships.first!)!)
                         self?.isApiFirstCall = false
@@ -192,6 +197,23 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             lengthValueLabel.text = String(valueSelected.size.cleanValue)
         }
     }
+    
+    // Defines who is the smallest and largest
+    func getSmallestAndlargest<T: Measurable>(from resource: [T]) -> (smallest: T, largest: T) {
+        // DOn't use sizes which the value is = 0. 0 means that the size is unknown
+        let resourceFiltered = resource.filter { (Measurable) -> Bool in
+            if Measurable.size != 0 {
+                return true
+            } else {
+                return false
+            }
+        }
+        
+        let largest = resourceFiltered.max { a, b in a.size < b.size }
+        //print(largest)
+        let smallest = resourceFiltered.min { a, b in a.size < b.size }
+        return (smallest: smallest!, largest: largest!)
+    }
 
     func fetchForCharacter(with page: Int) {
         swAPIClient.fetchForCharacter(nextPage: page, completion: { [weak self] (result) in
@@ -204,11 +226,9 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                 // Update pickerView with data
                 self?.pickerData = [String]()
                 self?.characters += result.resource
-                //var cha = self?.characters.filter { $0.size == 0 }
                 self?.objectQuantity = (self?.characters.count)!
                 self?.hasNextPage = result.hasPage
-                //print(self?.hasNextPage)
-                //print(self?.nextPageNumber)
+    
                 for character in (self?.characters)! {
                     self?.pickerData.append(character.name)
                 }
@@ -311,6 +331,11 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         setCharactersPlanetLabel()
     }
     
+    func hideTransportCraftViews() {
+        usdButton.isHidden = true
+        creditButton.isHidden = true
+    }
+
     func setCharactersPlanetLabel() {
         
         // first time, no character was selected yet
@@ -379,11 +404,6 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             }
         }
     }
-
-    func hideTransportCraftViews() {
-        usdButton.isHidden = true
-        creditButton.isHidden = true
-    }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -446,22 +466,11 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         }
     }
     
-    // Defines who is the smallest and largest
-    func getSmallestAndlargest<T: Measurable>(from resource: [T]) -> (smallest: T, largest: T) {
-        
-        // DOn't use sizes which the value is = 0. 0 means that the size is unknown 
-        let resourceFiltered = resource.filter { (Measurable) -> Bool in
-            if Measurable.size != 0 {
-                return true
-            } else {
-                return false
-            }
-        }
-        
-        let largest = resourceFiltered.max { a, b in a.size < b.size }
-        //print(largest)
-        let smallest = resourceFiltered.min { a, b in a.size < b.size }
-        return (smallest: smallest!, largest: largest!)
+    func cleanCharactersValues() {
+        charactersVehicleStarshipValueLabel.text = ""
+        charactersVehicleAndStarship = ""
+        charactersVehicles = [Vehicle]()
+        characterStarships = [Starship]()
     }
     
     @IBAction func convertCostToCredit(_ sender: Any) {
@@ -500,7 +509,7 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let textFieldText = NSString(string: textField.text!).replacingCharacters(in: range, with: string)
         
-        // if the value for exchange is <= 0 show an alert
+        //MARK: error handling - if the value for exchange is <= 0 show an alert
         if textFieldText != "" {
             if let text = Int(textFieldText) {
                 if text <= 0 {
@@ -512,6 +521,12 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         return true
     }
     
+    func showAlert() {
+        let alert = UIAlertController(title: "Alert", message: "Exchange value must be higher than zero", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+
     // Add done button to numpad
     func addDoneButtonOnKeyboard() {
         let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
@@ -535,28 +550,5 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             let newValue = Double(costValueLabel.text!)! * Double(exchangeRateValue)
             costValueLabel.text = String(newValue.cleanValue)
         }
-    }
-    
-    func hideCharacterLabels() {
-        charactersVehicleStarshipLabel.isHidden = true
-        charactersVehicleStarshipValueLabel.isHidden = true
-    }
-    
-    func showCharacterLabels() {
-        charactersVehicleStarshipLabel.isHidden = true
-        charactersVehicleStarshipValueLabel.isHidden = true
-    }
-    
-    func showAlert() {
-        let alert = UIAlertController(title: "Alert", message: "Exchange value must be higher than zero", preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
-    }
-    
-    func cleanCharactersValues() {
-        charactersVehicleStarshipValueLabel.text = ""
-        charactersVehicleAndStarship = ""
-        charactersVehicles = [Vehicle]()
-        characterStarships = [Starship]()
     }
 }

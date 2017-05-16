@@ -8,6 +8,29 @@
 
 import Foundation
 
+protocol JSONDecodable {
+    init?(JSON: [String: AnyObject]) throws
+}
+
+//Used for character, vehicle and starship
+protocol Measurable: JSONDecodable{
+    var size: Double { get }
+}
+
+enum ErrorApi : Error {
+    case jsonInvalidKeyOrElement(String)
+}
+
+//Used only for vehicles and starships
+protocol TransportCraft: Measurable {
+    var name: String { get }
+    var make: String { get }
+    var cost: Double { get }
+    var swClass: String { get }
+    var crew: String { get }
+    var capacity: Double { get }
+}
+
 enum ResourceType: String {
     case character
     case vehicle
@@ -37,28 +60,28 @@ struct Vehicle: TransportCraft {
     var crew: String
     var capacity: Double
     
-    init?(JSON: [String : AnyObject]) {
+    init?(JSON: [String : AnyObject]) throws {
         
         guard let name = JSON["name"] as? String else {
-            return nil
+            throw ErrorApi.jsonInvalidKeyOrElement("error - key or element invalid -name-")
         }
         guard let make = JSON["manufacturer"] as? String else {
-            return nil
+            throw ErrorApi.jsonInvalidKeyOrElement("error - key or element invalid -manufacturer-")
         }
         guard let cost = JSON["cost_in_credits"] as? String, let costInCredits = Double(cost) else {
-            return nil
+            throw ErrorApi.jsonInvalidKeyOrElement("error - key or element invalid -cost_in_credits-")
         }
         guard let size = JSON["length"] as? String else {
-            return nil
+            throw ErrorApi.jsonInvalidKeyOrElement("error - key or element invalid -length-")
         }
         guard let swClass = JSON["vehicle_class"] as? String else {
-            return nil
+            throw ErrorApi.jsonInvalidKeyOrElement("error - key or element invalid -vehicle_class-")
         }
         guard let crew = JSON["crew"] as? String else {
-            return nil
+            throw ErrorApi.jsonInvalidKeyOrElement("error - key or element invalid -crew-")
         }
         guard let capacity = JSON["cargo_capacity"] as? String, let cargoCapacity = Double(capacity) else {
-            return nil
+            throw ErrorApi.jsonInvalidKeyOrElement("error - key or element invalid -cargo_capacity-")
         }
         
         self.name = name
@@ -96,28 +119,28 @@ struct Starship: TransportCraft {
     var crew: String
     var capacity: Double
     
-    init?(JSON: [String : AnyObject]) {
+    init?(JSON: [String : AnyObject]) throws {
         
         guard let name = JSON["name"] as? String else {
-            return nil
+            throw ErrorApi.jsonInvalidKeyOrElement("error - key or element invalid -name-")
         }
         guard let make = JSON["manufacturer"] as? String else {
-            return nil
+            throw ErrorApi.jsonInvalidKeyOrElement("error - key or element invalid -manufacturer-")
         }
         guard let cost = JSON["cost_in_credits"] as? String, let costInCredits = Double(cost) else {
-            return nil
+            throw ErrorApi.jsonInvalidKeyOrElement("error - key or element invalid -cost_in_credits-")
         }
         guard let size = JSON["length"] as? String else {
-            return nil
+            throw ErrorApi.jsonInvalidKeyOrElement("error - key or element invalid -length-")
         }
         guard let swClass = JSON["starship_class"] as? String else {
-            return nil
+            throw ErrorApi.jsonInvalidKeyOrElement("error - key or element invalid -starship_class-")
         }
         guard let crew = JSON["crew"] as? String else {
-            return nil
+            throw ErrorApi.jsonInvalidKeyOrElement("error - key or element invalid -crew-")
         }
         guard let capacity = JSON["cargo_capacity"] as? String, let cargoCapacity = Double(capacity) else {
-            return nil
+            throw ErrorApi.jsonInvalidKeyOrElement("error - key or element invalid -cargo_capacity-")
         }
         
         self.name = name
@@ -156,31 +179,29 @@ struct Character: Measurable {
     var vehiclesID = [String]()
     var starshipsID = [String]()
     
-    init?(JSON: [String : AnyObject]) {
+    init?(JSON: [String : AnyObject]) throws {
         
         guard let name = JSON["name"] as? String else {
-            return nil
+            throw ErrorApi.jsonInvalidKeyOrElement("error - key or element invalid -name-")
         }
         guard let born = JSON["birth_year"] as? String else {
-            return nil
+            throw ErrorApi.jsonInvalidKeyOrElement("error - key or element invalid -birth_year-")
         }
         guard let size = JSON["height"] as? String else {
-            return nil
-        }
+            throw ErrorApi.jsonInvalidKeyOrElement("error - key or element invalid -height-")        }
         guard let eyes = JSON["eye_color"] as? String else {
-            return nil
+            throw ErrorApi.jsonInvalidKeyOrElement("error - key or element invalid -eye_color-")
         }
         guard let hair = JSON["hair_color"] as? String else {
-            return nil
-        }
+            throw ErrorApi.jsonInvalidKeyOrElement("error - key or element invalid -hair_color-")        }
         guard let homeworldEndPoint = JSON["homeworld"] else {
-            return nil
+            throw ErrorApi.jsonInvalidKeyOrElement("error - key or element invalid -homeworld-")
         }
         guard let vehicleEndPoints = JSON["vehicles"] as? [String] else {
-            return nil
+           throw ErrorApi.jsonInvalidKeyOrElement("error - key or element invalid -vehicles-")
         }
         guard let starshipEndpoints = JSON["starships"] as? [String] else {
-            return nil
+           throw ErrorApi.jsonInvalidKeyOrElement("error - key or element invalid -starships-")
         }
         
         self.name = name
@@ -206,12 +227,12 @@ struct Planet: JSONDecodable {
     let name: String
     let id: String
     
-    init?(JSON: [String : AnyObject]) {
+    init?(JSON: [String : AnyObject]) throws {
         guard let name = JSON["name"] as? String else {
-            return nil
+            throw ErrorApi.jsonInvalidKeyOrElement("error - key or element invalid -name-")
         }
         guard let url = JSON["url"] else {
-            return nil
+            throw ErrorApi.jsonInvalidKeyOrElement("error - key or element invalid -url-")
         }
         
         self.name = name
@@ -239,7 +260,6 @@ extension String {
 extension Double {
     // If the decimal is 0 than return an Int
     var cleanValue: String {
-
         return self.truncatingRemainder(dividingBy: 1) == 0 ? String(format: "%.0f", self) : String(format: "%.02f", self)
     }
 }

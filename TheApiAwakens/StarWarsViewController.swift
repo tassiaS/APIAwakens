@@ -40,20 +40,6 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate{
             print("Internet connection FAILED")
         }
     }
-    
-    func isConnectedToNetwork() -> Bool{
-        if Network.isConnectedToNetwork() == true {
-            print("Internet connection OK")
-            return true
-        } else {
-            let alert = UIAlertController(title: "Alert", message: "The Internet connection appears to be offline", preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
-            print("Internet connection FAILED")
-            return false
-        }
-    }
-
 
 }
 

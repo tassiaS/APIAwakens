@@ -10,6 +10,7 @@ import Foundation
 
 import Foundation
 
+//MARK: error handling - The device being offline when an API call is made
 public class Network {
     
     class func isConnectedToNetwork()-> Bool{
