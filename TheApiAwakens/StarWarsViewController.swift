@@ -8,13 +8,13 @@
 
 import UIKit
 
-class ViewController: UIViewController, UIGestureRecognizerDelegate{
-    
+class ViewController: UIViewController, UIGestureRecognizerDelegate {
+
     @IBOutlet weak var vehicleStackView: UIStackView!
     @IBOutlet weak var characterStackview: UIStackView!
     @IBOutlet weak var starshipStackview: UIStackView!
     var type: ResourceType!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -40,6 +40,5 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate{
             print("Internet connection FAILED")
         }
     }
-
 }
 

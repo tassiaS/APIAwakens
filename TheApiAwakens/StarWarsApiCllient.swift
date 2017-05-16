@@ -76,7 +76,6 @@ enum SWAwakens: Endpoint {
 }
 
 final class SWApiClient: APIClient {
-    
     var configuration: URLSessionConfiguration
     lazy var session: URLSession = {
         return URLSession(configuration: self.configuration)
@@ -89,7 +88,6 @@ final class SWApiClient: APIClient {
     convenience init() {
         self.init(configuration: .default)
     }
-    
     
     func fetchForStarship(nextPage: Int, completion: @escaping (APIResult<[Starship]>) -> Void) {
         let endpoint = SWAwakens.Starship(nextPage: nextPage)
@@ -140,8 +138,7 @@ final class SWApiClient: APIClient {
         
         
         fetch(request: endpoint.request, parse: { (json) -> [Character]? in
-            print(endpoint.request.url?.absoluteString as Any)
-
+            
             guard let characters = json["results"] as? [[String:AnyObject]] else {
                 return nil
             }

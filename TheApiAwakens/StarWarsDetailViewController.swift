@@ -1,15 +1,15 @@
-//
-//  DetailViewController.swift
-//  TheApiAwakens
-//
-//  Created by Tassia Serrao on 13/01/2017.
-//  Copyright © 2017 Tassia Serrao. All rights reserved.
-//
+    //
+    //  DetailViewController.swift
+    //  TheApiAwakens
+    //
+    //  Created by Tassia Serrao on 13/01/2017.
+    //  Copyright © 2017 Tassia Serrao. All rights reserved.
+    //
 
 import UIKit
 
 class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIScrollViewDelegate, UITextFieldDelegate {
-    
+
     @IBOutlet weak var nameValueLabel: UILabel!
     @IBOutlet weak var makeValueLabel: UILabel!
     @IBOutlet weak var costValueLabel: UILabel!
@@ -17,15 +17,12 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     @IBOutlet weak var classValueLabel: UILabel!
     @IBOutlet weak var crewValueLabel: UILabel!
     @IBOutlet weak var charactersVehicleStarshipValueLabel: UILabel!
-    
-    
     @IBOutlet weak var makeLabel: UILabel!
     @IBOutlet weak var costLabel: UILabel!
     @IBOutlet weak var lengthLabel: UILabel!
     @IBOutlet weak var classLabel: UILabel!
     @IBOutlet weak var crewLabel: UILabel!
     @IBOutlet weak var charactersVehicleStarshipLabel: UILabel!
-    
     @IBOutlet weak var largestLabel: UILabel!
     @IBOutlet weak var smallestLabel: UILabel!
     @IBOutlet weak var smallestLabelValue: UILabel!
@@ -38,7 +35,7 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     @IBOutlet weak var exchangeTextField: UITextField!
     @IBOutlet weak var pickerView: UIPickerView!
 
-    
+
     var didCharacterStarshipFinished = false
     var totalValueToEnglish = 0.0
     var totalValueToMetric = 0.0
@@ -58,7 +55,7 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     var starshipsIDs = [String]()
     var vehiclesIDs = [String]()
     var hasFinishedRequest = false
-    
+
     var planets = [Planet]() {
         didSet {
             setCharactersPlanetLabel()
@@ -74,7 +71,6 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             setCharacterVehicleAndStarshipLabel()
         }
     }
-
     var hasNextPage = false {
         didSet {
             if hasNextPage { nextPageNumber += 1 }
@@ -106,12 +102,12 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             default: break
         }
     }
-    
+
     func hideCharacterLabels() {
         charactersVehicleStarshipLabel.isHidden = true
         charactersVehicleStarshipValueLabel.isHidden = true
     }
-    
+
     func fetchForStarship(with page: Int) {
         swAPIClient.fetchForStarship(nextPage: page, completion: { [weak self] (result) in
             switch result {
@@ -138,6 +134,7 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             }
         })
     }
+
     func fetchForVehicle(with page: Int) {
         swAPIClient.fetchForVehicle(nextPage: page, completion: { [weak self] (result) in
             switch result {
@@ -197,7 +194,7 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             lengthValueLabel.text = String(valueSelected.size.cleanValue)
         }
     }
-    
+
     // Defines who is the smallest and largest
     func getSmallestAndlargest<T: Measurable>(from resource: [T]) -> (smallest: T, largest: T) {
         // DOn't use sizes which the value is = 0. 0 means that the size is unknown
@@ -210,7 +207,6 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         }
         
         let largest = resourceFiltered.max { a, b in a.size < b.size }
-        //print(largest)
         let smallest = resourceFiltered.min { a, b in a.size < b.size }
         return (smallest: smallest!, largest: largest!)
     }
@@ -228,7 +224,7 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                 self?.characters += result.resource
                 self?.objectQuantity = (self?.characters.count)!
                 self?.hasNextPage = result.hasPage
-    
+
                 for character in (self?.characters)! {
                     self?.pickerData.append(character.name)
                 }
@@ -259,7 +255,7 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             }
         })
     }
-    
+
     func fetchForCharacterVehicle(with vehiclesID: [String]) {
         for id in vehiclesID {
             swAPIClient.fetchForCharacterVehicle(with: id) { (result) in
@@ -285,7 +281,7 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             }
         }
     }
-    
+
     func fetchForPlanet(with id: String) {
         swAPIClient.fetchForCharacterPlanet(with: id) { (result) in
             switch result {
@@ -330,7 +326,7 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         
         setCharactersPlanetLabel()
     }
-    
+
     func hideTransportCraftViews() {
         usdButton.isHidden = true
         creditButton.isHidden = true
@@ -338,7 +334,7 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
 
     func setCharactersPlanetLabel() {
         
-        // first time, no character was selected yet
+        // first time, no character was selected yet on pickerView
         if planets.count == 1 {
             costValueLabel.text = planets.first?.name
         } else {
@@ -349,7 +345,7 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             }
         }
     }
-    
+
     func setCharacterVehicleAndStarshipLabel() {
         var vehiclesNamesFormatted = ""
         var starshipNamesFormatted = ""
@@ -404,15 +400,15 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             }
         }
     }
-    
+
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
-    
+
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return pickerData.count
     }
-    
+
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
             if (objectQuantity - row == 3) && hasNextPage && hasFinishedRequest {
                 hasFinishedRequest = false
@@ -423,7 +419,6 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                     fetchForVehicle(with: nextPageNumber)
                 case .character:
                     fetchForCharacter(with: nextPageNumber)
-                    print("pickerView \(nextPageNumber)")
                 default:
                     break
                 }
@@ -431,7 +426,7 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
 
         return pickerData[row]
     }
-    
+
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         exchangeTextField.text = ""
         costValueLabel.text = "     "
@@ -465,14 +460,14 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         default: break
         }
     }
-    
+
     func cleanCharactersValues() {
         charactersVehicleStarshipValueLabel.text = ""
         charactersVehicleAndStarship = ""
         charactersVehicles = [Vehicle]()
         characterStarships = [Starship]()
     }
-    
+
     @IBAction func convertCostToCredit(_ sender: Any) {
         exchangeTextField.isHidden = true
         exchangeLabel.isHidden = true
@@ -480,12 +475,14 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         usdButton.isSelected = false
         creditButton.isSelected = true
     }
+
     @IBAction func convertCostToUSD(_ sender: Any) {
         exchangeTextField.isHidden = false
         exchangeLabel.isHidden = false
         usdButton.isSelected = true
         creditButton.isSelected = false
     }
+
     @IBAction func convertLengthToEnglish(_ sender: Any) {
         exchangeTextField.isHidden = true
         exchangeLabel.isHidden = true
@@ -494,6 +491,7 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         metricButton.isSelected = false
         lengthValueLabel.text = (valueSelectedAllTypes.size / 0.9144).cleanValue
     }
+
     @IBAction func convertLengthToMetric(_ sender: Any) {
         exchangeTextField.isHidden = true
         exchangeLabel.isHidden = true
@@ -505,7 +503,7 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         englishButton.isSelected = false
         lengthValueLabel.text = valueSelectedAllTypes.size.cleanValue
     }
-    
+
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let textFieldText = NSString(string: textField.text!).replacingCharacters(in: range, with: string)
         
@@ -520,13 +518,12 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         }
         return true
     }
-    
+
     func showAlert() {
         let alert = UIAlertController(title: "Alert", message: "Exchange value must be higher than zero", preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
-
     // Add done button to numpad
     func addDoneButtonOnKeyboard() {
         let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
@@ -543,7 +540,7 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         
         self.exchangeTextField.inputAccessoryView = doneToolbar
     }
-    
+
     func doneButtonAction() {
         self.exchangeTextField.resignFirstResponder()
         if let exchangeRateValue = Int(exchangeTextField.text!) {
