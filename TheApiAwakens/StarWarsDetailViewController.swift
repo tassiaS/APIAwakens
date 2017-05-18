@@ -80,20 +80,18 @@ class StarWarsDetailViewController: UIViewController, UIPickerViewDelegate, UIPi
         pickerView.dataSource = self
         exchangeTextField.delegate = self
         self.addDoneButtonOnKeyboard()
+        self.navigationItem.title = type.rawValue
     }
 
     func loadData() {
         switch type {
             case .starship :
-                self.navigationItem.title = ResourceType.starship.rawValue
                 hideCharacterLabels()
                 fetchForStarship(with: nextPageNumber)
             case .vehicle :
-                self.navigationItem.title = ResourceType.vehicle.rawValue
                 hideCharacterLabels()
                 fetchForVehicle(with: nextPageNumber)
             case .character :
-                self.navigationItem.title = ResourceType.character.rawValue
                 fetchForCharacter(with: nextPageNumber)
             default: break
         }
@@ -195,7 +193,7 @@ class StarWarsDetailViewController: UIViewController, UIPickerViewDelegate, UIPi
         if valueSelected.size == 0 {
             lengthValueLabel.text = "Unknown"
         } else {
-            lengthValueLabel.text = String(valueSelected.size.cleanValue)
+            lengthValueLabel.text = valueSelected.size.cleanValue
         }
     }
 
@@ -237,16 +235,17 @@ class StarWarsDetailViewController: UIViewController, UIPickerViewDelegate, UIPi
                 
                 //Set labels with first element of the array since the user has not selected any row on the pickerView yet
                 let firstCharacter = self?.characters.first!
+                
                 if (self?.isApiFirstCall)! {
                     // Check if character has any vehicle and fetch for it
-                    if (self?.characters.first?.vehiclesID.first) != nil {
+                    if (firstCharacter?.vehiclesID.first) != nil {
                         self?.vehiclesIDs = (firstCharacter!.vehiclesID)
                         self?.fetchForCharacterVehicle(with: (self?.vehiclesIDs)!)
                     } else {
                         self?.charactersVehicleStarshipValueLabel.text = "None"
                     }
                     // Check if character has any starship and fetch for it
-                    if (self?.characters.first?.starshipsID.first) != nil {
+                    if (firstCharacter?.starshipsID.first) != nil {
                         self?.starshipsIDs = (firstCharacter!.starshipsID)
                         self?.fetchForCharacterStarship(with: (self?.starshipsIDs)!)
                     } else {
@@ -450,13 +449,13 @@ class StarWarsDetailViewController: UIViewController, UIPickerViewDelegate, UIPi
             
             cleanCharactersValues()
 
-            if characterSelected.vehiclesID.first != nil {
+            if !characterSelected.vehiclesID.isEmpty {
                 fetchForCharacterVehicle(with: vehiclesIDs)
             } else {
                 charactersVehicleStarshipValueLabel.text = ResourceType.none.rawValue
             }
             
-            if characterSelected.starshipsID.first != nil {
+            if !characterSelected.starshipsID.isEmpty {
                 fetchForCharacterStarship(with: starshipsIDs)
             } else {
                 charactersVehicleStarshipValueLabel.text = ResourceType.none.rawValue
@@ -477,12 +476,12 @@ class StarWarsDetailViewController: UIViewController, UIPickerViewDelegate, UIPi
     @IBAction func convertCostToCredit(_ sender: Any) {
         exchangeTextField.isHidden = true
         exchangeLabel.isHidden = true
-        costValueLabel.text = String(valueSelectedTransportCraft.cost.cleanValue)
+        costValueLabel.text = valueSelectedTransportCraft.cost.cleanValue
         usdButton.isSelected = false
         creditButton.isSelected = true
     }
-
-    @IBAction func convertCostToUSD(_ sender: Any) {
+    
+    @IBAction func showUsdCost(_ sender: Any) {
         exchangeTextField.isHidden = false
         exchangeLabel.isHidden = false
         usdButton.isSelected = true
@@ -550,7 +549,7 @@ class StarWarsDetailViewController: UIViewController, UIPickerViewDelegate, UIPi
     func doneButtonAction() {
         self.exchangeTextField.resignFirstResponder()
         if let exchangeRateValue = Int(exchangeTextField.text!) {
-            let newValue = Double(costValueLabel.text!)! * Double(exchangeRateValue)
+            let newValue = valueSelectedTransportCraft.cost * Double(exchangeRateValue)
             costValueLabel.text = String(newValue.cleanValue)
         }
     }

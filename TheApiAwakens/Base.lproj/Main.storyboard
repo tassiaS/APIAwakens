@@ -302,7 +302,7 @@
                                 <rect key="frame" x="256" y="119" width="31" height="30"/>
                                 <state key="normal" title="USD"/>
                                 <connections>
-                                    <action selector="convertCostToUSD:" destination="X7w-tD-2PU" eventType="touchUpInside" id="Mq3-iW-wC2"/>
+                                    <action selector="showUsdCost:" destination="X7w-tD-2PU" eventType="touchUpInside" id="cEm-g5-hu1"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5lP-C4-9hM">
