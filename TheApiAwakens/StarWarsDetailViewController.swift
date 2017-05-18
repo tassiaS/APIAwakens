@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIScrollViewDelegate, UITextFieldDelegate {
+class StarWarsDetailViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIScrollViewDelegate, UITextFieldDelegate {
 
     @IBOutlet weak var nameValueLabel: UILabel!
     @IBOutlet weak var makeValueLabel: UILabel!
@@ -43,7 +43,7 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     var pickerData = [String]()
     var nextPageNumber = 1
     var type = ResourceType.none
-    var swAPIClient: SWApiClient = SWApiClient()
+    var swAPIClient = SWApiClient()
     var starships = [Starship]()
     var vehicles = [Vehicle]()
     var characters = [Character]()
@@ -71,12 +71,8 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             setCharacterVehicleAndStarshipLabel()
         }
     }
-    var hasNextPage = false {
-        didSet {
-            if hasNextPage { nextPageNumber += 1 }
-        }
-    }
-
+    var hasNextPage = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         loadData()
@@ -121,6 +117,7 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                     self?.starships += result.resource
                     self?.objectQuantity = (self?.starships.count)!
                     self?.hasNextPage = result.hasPage
+                    self?.shouldIncreaseNextPageNumber(with: (self?.hasNextPage)!)
                     for starship in (self?.starships)! {
                         self?.pickerData.append(starship.name)
                     }
@@ -133,6 +130,12 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                     }
             }
         })
+    }
+    
+    func shouldIncreaseNextPageNumber(with hasNextPage: Bool) {
+        if hasNextPage {
+            nextPageNumber += 1
+        }
     }
 
     func fetchForVehicle(with page: Int) {
@@ -148,6 +151,7 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                     self?.vehicles += result.resource
                     self?.objectQuantity = (self?.vehicles.count)!
                     self?.hasNextPage = result.hasPage
+                    self?.shouldIncreaseNextPageNumber(with: (self?.hasNextPage)!)
 
                     for vehicle in (self?.vehicles)! {
                     self?.pickerData.append(vehicle.name)
@@ -224,6 +228,7 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                 self?.characters += result.resource
                 self?.objectQuantity = (self?.characters.count)!
                 self?.hasNextPage = result.hasPage
+                self?.shouldIncreaseNextPageNumber(with: (self?.hasNextPage)!)
 
                 for character in (self?.characters)! {
                     self?.pickerData.append(character.name)
@@ -411,6 +416,7 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
 
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
             if (objectQuantity - row == 3) && hasNextPage && hasFinishedRequest {
+                
                 hasFinishedRequest = false
                 switch type {
                 case .starship:

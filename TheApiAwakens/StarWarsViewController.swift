@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UIGestureRecognizerDelegate {
+class StarWarsViewController: UIViewController, UIGestureRecognizerDelegate {
 
     @IBOutlet weak var vehicleStackView: UIStackView!
     @IBOutlet weak var characterStackview: UIStackView!
@@ -21,24 +21,31 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
         let stackViews = [characterStackview, vehicleStackView, starshipStackview]
         
         for stackView in stackViews {
-            let recognizer = UITapGestureRecognizer(target: self, action: #selector(showSWDetailViewController(_:)))
+            let recognizer = UITapGestureRecognizer(target: self, action: #selector(onItemClicked(_:)))
             stackView?.addGestureRecognizer(recognizer)
         }
     }
 
-    func showSWDetailViewController(_ gestureRecognizer: UITapGestureRecognizer) {
+    func onItemClicked(_ gestureRecognizer: UITapGestureRecognizer) {
         type = ResourceType.getType(with: (gestureRecognizer.view?.tag)!)
         
         if Reachability.isConnectedToNetwork() {
-            let detailVC = storyboard?.instantiateViewController(withIdentifier: "detailViewController") as! DetailViewController
-            detailVC.type = self.type
-            navigationController?.pushViewController(detailVC, animated: true)
+            showSWDetailViewController()
         } else {
-            let alert = UIAlertController(title: "Alert", message: "The Internet connection appears to be offline", preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
-            print("Internet connection FAILED")
+            showOfflineError()
         }
+    }
+    
+    func showSWDetailViewController() {
+        let detailVC = storyboard?.instantiateViewController(withIdentifier: "StarWarsDetailViewController") as! StarWarsDetailViewController
+        detailVC.type = self.type
+        navigationController?.pushViewController(detailVC, animated: true)
+    }
+    
+    func showOfflineError() {
+        let alert = UIAlertController(title: "You're offline", message: "Please connect to the internet and try again", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
 }
 
