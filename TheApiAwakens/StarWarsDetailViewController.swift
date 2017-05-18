@@ -238,14 +238,14 @@ class StarWarsDetailViewController: UIViewController, UIPickerViewDelegate, UIPi
                 
                 if (self?.isApiFirstCall)! {
                     // Check if character has any vehicle and fetch for it
-                    if (firstCharacter?.vehiclesID.first) != nil {
+                    if !(firstCharacter?.vehiclesID.isEmpty)! {
                         self?.vehiclesIDs = (firstCharacter!.vehiclesID)
                         self?.fetchForCharacterVehicle(with: (self?.vehiclesIDs)!)
                     } else {
                         self?.charactersVehicleStarshipValueLabel.text = "None"
                     }
                     // Check if character has any starship and fetch for it
-                    if (firstCharacter?.starshipsID.first) != nil {
+                    if !(firstCharacter?.starshipsID.isEmpty)! {
                         self?.starshipsIDs = (firstCharacter!.starshipsID)
                         self?.fetchForCharacterStarship(with: (self?.starshipsIDs)!)
                     } else {
@@ -338,7 +338,8 @@ class StarWarsDetailViewController: UIViewController, UIPickerViewDelegate, UIPi
 
     func setCharactersPlanetLabel() {
         
-        // first time, no character was selected yet on pickerView
+        // If planets is equal to 1, this means that so far only the planet of one character was fetched. This character is automatically fetched so the lablels can show some values before the user selects any other character.
+        // if/else is needed to guarantee that characterSelected is not nil
         if planets.count == 1 {
             costValueLabel.text = planets.first?.name
         } else {
