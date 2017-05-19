@@ -18,11 +18,11 @@ class StarWarsViewController: UIViewController, UIGestureRecognizerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let stackViews = [characterStackview, vehicleStackView, starshipStackview]
+        let stackViews: [UIStackView] = [characterStackview, vehicleStackView, starshipStackview]
         
         for stackView in stackViews {
             let recognizer = UITapGestureRecognizer(target: self, action: #selector(onItemClicked(_:)))
-            stackView?.addGestureRecognizer(recognizer)
+            stackView.addGestureRecognizer(recognizer)
         }
     }
 

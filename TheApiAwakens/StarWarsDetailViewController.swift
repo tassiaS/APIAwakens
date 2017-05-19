@@ -55,6 +55,7 @@ class StarWarsDetailViewController: UIViewController, UIPickerViewDelegate, UIPi
     var starshipsIDs = [String]()
     var vehiclesIDs = [String]()
     var hasFinishedRequest = false
+    var indicator = UIActivityIndicatorView()
 
     var planets = [Planet]() {
         didSet {
@@ -75,6 +76,7 @@ class StarWarsDetailViewController: UIViewController, UIPickerViewDelegate, UIPi
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        hideSubviews()
         loadData()
         pickerView.delegate = self
         pickerView.dataSource = self
@@ -82,7 +84,29 @@ class StarWarsDetailViewController: UIViewController, UIPickerViewDelegate, UIPi
         self.addDoneButtonOnKeyboard()
         self.navigationItem.title = type.rawValue
     }
-
+    //Hide all subviews but indicator
+    func hideSubviews() {
+        for view in self.view.subviews {
+            if view != indicator {
+                view.isHidden = true
+            }
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        createIndicator()
+        indicator.startAnimating()
+    }
+    
+    func createIndicator() {
+        indicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.white)
+        indicator.frame = CGRect(x: 0.0, y: 0.0, width: 40.0, height: 40.0)
+        indicator.center = self.view.center
+        self.view.addSubview(indicator)
+        indicator.bringSubview(toFront: view)
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+    }
+    
     func loadData() {
         switch type {
             case .starship :
@@ -104,6 +128,7 @@ class StarWarsDetailViewController: UIViewController, UIPickerViewDelegate, UIPi
 
     func fetchForStarship(with page: Int) {
         swAPIClient.fetchForStarship(nextPage: page, completion: { [weak self] (result) in
+            self?.indicator.stopAnimating()
             switch result {
                 case .failure(let error):
                     print(error)
@@ -166,6 +191,7 @@ class StarWarsDetailViewController: UIViewController, UIPickerViewDelegate, UIPi
     }
     //Set labels only for Vehcile and Starship (Character is not a TransportCraft)
     func setLabels(with valueSelected: TransportCraft) {
+        stopShowingIndicator()
         
         switch type {
         case .starship:
@@ -194,6 +220,20 @@ class StarWarsDetailViewController: UIViewController, UIPickerViewDelegate, UIPi
             lengthValueLabel.text = "Unknown"
         } else {
             lengthValueLabel.text = valueSelected.size.cleanValue
+        }
+    }
+    
+    func stopShowingIndicator() {
+        showSubviews()
+        indicator.stopAnimating()
+    }
+    
+    //Show all subviews but indicator
+    func showSubviews() {
+        for view in self.view.subviews {
+            if view != indicator {
+                view.isHidden = false
+            }
         }
     }
 
@@ -298,7 +338,7 @@ class StarWarsDetailViewController: UIViewController, UIPickerViewDelegate, UIPi
     }
 
     func setLabels(with valueSelected: Character) {
-        
+        stopShowingIndicator()
         hideTransportCraftViews()
         
         let characters = getSmallestAndlargest(from: self.characters)
@@ -415,7 +455,8 @@ class StarWarsDetailViewController: UIViewController, UIPickerViewDelegate, UIPi
     }
 
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-            if (objectQuantity - row == 3) && hasNextPage && hasFinishedRequest {
+        let pickerViewRowsQuantity = pickerView.numberOfRows(inComponent: component)
+            if (pickerViewRowsQuantity - row == 3) && hasNextPage && hasFinishedRequest {
                 
                 hasFinishedRequest = false
                 switch type {
