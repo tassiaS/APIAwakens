@@ -8,12 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		D21A9C941E27D0D700141CAF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21A9C931E27D0D700141CAF /* AppDelegate.swift */; };
-		D21A9C961E27D0D700141CAF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21A9C951E27D0D700141CAF /* ViewController.swift */; };
+		D21A9C961E27D0D700141CAF /* StarWarsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21A9C951E27D0D700141CAF /* StarWarsViewController.swift */; };
 		D21A9C991E27D0D700141CAF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D21A9C971E27D0D700141CAF /* Main.storyboard */; };
 		D21A9C9B1E27D0D700141CAF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D21A9C9A1E27D0D700141CAF /* Assets.xcassets */; };
 		D21A9C9E1E27D0D700141CAF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D21A9C9C1E27D0D700141CAF /* LaunchScreen.storyboard */; };
 		D21A9CA91E27D0D700141CAF /* TheApiAwakensTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21A9CA81E27D0D700141CAF /* TheApiAwakensTests.swift */; };
 		D21A9CB41E27D0D700141CAF /* TheApiAwakensUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21A9CB31E27D0D700141CAF /* TheApiAwakensUITests.swift */; };
+		D21A9CC21E29194D00141CAF /* StarWarsDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21A9CC11E29194D00141CAF /* StarWarsDetailViewController.swift */; };
+		D255EF2C1E76D55A0092602D /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = D255EF2B1E76D55A0092602D /* Network.swift */; };
+		D28E36651E2FBF1A00CE603A /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D28E36641E2FBF1A00CE603A /* APIClient.swift */; };
+		D28E36671E305B0000CE603A /* StarWarsApiCllient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D28E36661E305B0000CE603A /* StarWarsApiCllient.swift */; };
+		D28E36691E3064C400CE603A /* StarWarsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D28E36681E3064C400CE603A /* StarWarsModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,7 +41,7 @@
 /* Begin PBXFileReference section */
 		D21A9C901E27D0D700141CAF /* TheApiAwakens.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TheApiAwakens.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D21A9C931E27D0D700141CAF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		D21A9C951E27D0D700141CAF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		D21A9C951E27D0D700141CAF /* StarWarsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarWarsViewController.swift; sourceTree = "<group>"; };
 		D21A9C981E27D0D700141CAF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D21A9C9A1E27D0D700141CAF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D21A9C9D1E27D0D700141CAF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -47,6 +52,11 @@
 		D21A9CAF1E27D0D700141CAF /* TheApiAwakensUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TheApiAwakensUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D21A9CB31E27D0D700141CAF /* TheApiAwakensUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TheApiAwakensUITests.swift; sourceTree = "<group>"; };
 		D21A9CB51E27D0D700141CAF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D21A9CC11E29194D00141CAF /* StarWarsDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarWarsDetailViewController.swift; sourceTree = "<group>"; };
+		D255EF2B1E76D55A0092602D /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		D28E36641E2FBF1A00CE603A /* APIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = APIClient.swift; path = ../APIClient.swift; sourceTree = "<group>"; };
+		D28E36661E305B0000CE603A /* StarWarsApiCllient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarWarsApiCllient.swift; sourceTree = "<group>"; };
+		D28E36681E3064C400CE603A /* StarWarsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarWarsModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,7 +108,12 @@
 			isa = PBXGroup;
 			children = (
 				D21A9C931E27D0D700141CAF /* AppDelegate.swift */,
-				D21A9C951E27D0D700141CAF /* ViewController.swift */,
+				D21A9C951E27D0D700141CAF /* StarWarsViewController.swift */,
+				D21A9CC11E29194D00141CAF /* StarWarsDetailViewController.swift */,
+				D28E36641E2FBF1A00CE603A /* APIClient.swift */,
+				D28E36661E305B0000CE603A /* StarWarsApiCllient.swift */,
+				D28E36681E3064C400CE603A /* StarWarsModel.swift */,
+				D255EF2B1E76D55A0092602D /* Network.swift */,
 				D21A9C971E27D0D700141CAF /* Main.storyboard */,
 				D21A9C9A1E27D0D700141CAF /* Assets.xcassets */,
 				D21A9C9C1E27D0D700141CAF /* LaunchScreen.storyboard */,
@@ -193,6 +208,7 @@
 				TargetAttributes = {
 					D21A9C8F1E27D0D700141CAF = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = M3U59XUU7L;
 						ProvisioningStyle = Automatic;
 					};
 					D21A9CA31E27D0D700141CAF = {
@@ -259,8 +275,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D21A9C961E27D0D700141CAF /* ViewController.swift in Sources */,
+				D21A9CC21E29194D00141CAF /* StarWarsDetailViewController.swift in Sources */,
+				D21A9C961E27D0D700141CAF /* StarWarsViewController.swift in Sources */,
+				D28E36671E305B0000CE603A /* StarWarsApiCllient.swift in Sources */,
 				D21A9C941E27D0D700141CAF /* AppDelegate.swift in Sources */,
+				D28E36651E2FBF1A00CE603A /* APIClient.swift in Sources */,
+				D255EF2C1E76D55A0092602D /* Network.swift in Sources */,
+				D28E36691E3064C400CE603A /* StarWarsModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -355,7 +376,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -399,7 +420,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -412,6 +433,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = M3U59XUU7L;
 				INFOPLIST_FILE = TheApiAwakens/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.treehouse.TheApiAwakens;
@@ -424,6 +446,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = M3U59XUU7L;
 				INFOPLIST_FILE = TheApiAwakens/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.treehouse.TheApiAwakens;
@@ -505,6 +528,7 @@
 				D21A9CBA1E27D0D700141CAF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D21A9CBB1E27D0D700141CAF /* Build configuration list for PBXNativeTarget "TheApiAwakensTests" */ = {
 			isa = XCConfigurationList;
@@ -513,6 +537,7 @@
 				D21A9CBD1E27D0D700141CAF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D21A9CBE1E27D0D700141CAF /* Build configuration list for PBXNativeTarget "TheApiAwakensUITests" */ = {
 			isa = XCConfigurationList;
@@ -521,6 +546,7 @@
 				D21A9CC01E27D0D700141CAF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
