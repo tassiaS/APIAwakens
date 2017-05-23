@@ -51,7 +51,7 @@ enum SWAwakens: Endpoint {
     var path: String {
         switch self {
         case .Starship:
-            return "/api/starship/"
+            return "/api/starships/"
         case . Character:
             return  "/api/people/"
         case .CharacterPlanet(let planetId):

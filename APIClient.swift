@@ -41,13 +41,14 @@ extension APIClient {
                 if let error = error {
                     completion(nil, HTTPResponse, error)
                 }
-            }else {
+            } else {
                 switch HTTPResponse.statusCode {
                 case 200:
                     do {
                         let json = try JSONSerialization.jsonObject(with: data!, options: []) as! [String : AnyObject]
                         completion(json as JSON?, nil, nil)
-                    } catch {
+                    } catch(let error) {
+                        completion(nil , nil , error)
                         print("json error: \(error.localizedDescription)")
                     }
                 default:
@@ -64,13 +65,15 @@ extension APIClient {
         let task = jsonTask(with: request) { (json, reponse, apiError) in
             
             DispatchQueue.main.async {
-                let error = NSError(domain: TREnetworkingErrorDomain, code: HTTPResponseFailed, userInfo: nil)
                 
+                if let apiError = apiError {
+                    completion(APIResult.failure(apiError))
+                    return
+                }
+                
+                let error = NSError(domain: TREnetworkingErrorDomain, code: HTTPResponseFailed, userInfo: nil)
                 guard let json = json else {
                     completion(APIResult.failure(error))
-                    if let error = apiError {
-                        completion(APIResult.failure(error))
-                    }
                     return
                 }
                 

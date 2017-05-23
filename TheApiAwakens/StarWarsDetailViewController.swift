@@ -127,7 +127,6 @@ class StarWarsDetailViewController: UIViewController, UIPickerViewDelegate, UIPi
 
     func fetchForStarship(with page: Int) {
         swAPIClient.fetchForStarship(nextPage: page, completion: { [weak self] (result) in
-            self?.indicator.stopAnimating()
             switch result {
                 case .failure(let error):
                     if page == 1 {
@@ -233,6 +232,7 @@ class StarWarsDetailViewController: UIViewController, UIPickerViewDelegate, UIPi
     func stopShowingIndicator() {
         showSubviews()
         indicator.stopAnimating()
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
     
     //Show all subviews but indicator
