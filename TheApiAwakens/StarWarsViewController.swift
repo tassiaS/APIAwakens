@@ -21,12 +21,12 @@ class StarWarsViewController: UIViewController, UIGestureRecognizerDelegate {
         let stackViews: [UIStackView] = [characterStackview, vehicleStackView, starshipStackview]
         
         for stackView in stackViews {
-            let recognizer = UITapGestureRecognizer(target: self, action: #selector(onItemClicked(_:)))
+            let recognizer = UITapGestureRecognizer(target: self, action: #selector(didClickStackview(_:)))
             stackView.addGestureRecognizer(recognizer)
         }
     }
 
-    func onItemClicked(_ gestureRecognizer: UITapGestureRecognizer) {
+    func didClickStackview(_ gestureRecognizer: UITapGestureRecognizer) {
         type = ResourceType.getType(with: (gestureRecognizer.view?.tag)!)
         
         if Reachability.isConnectedToNetwork() {

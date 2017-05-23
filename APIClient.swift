@@ -7,9 +7,11 @@
 //
 
 import Foundation
+import UIKit
 
 public let TREnetworkingErrorDomain = "com.treehouse.Stormy.NetwowrkingError"
 public let JsonKeyOrElementInvalid: Int = 20
+public let HTTPResponseFailed: Int = 21
 typealias JSON = [String: AnyObject]
 
 
@@ -49,6 +51,7 @@ extension APIClient {
                         print("json error: \(error.localizedDescription)")
                     }
                 default:
+                    completion(nil, HTTPResponse, nil)
                     print("Received HTTP response: \(HTTPResponse.statusCode), which was not handled, \(request.url)")
                 }
             }
@@ -58,11 +61,14 @@ extension APIClient {
 
     func fetch<T>(request: URLRequest, parse: @escaping (JSON) -> T?, completion: @escaping (APIResult<T>) -> Void) {
         var hasNextPage = true
-        let task = jsonTask(with: request) { (json, reponse, error) in
+        let task = jsonTask(with: request) { (json, reponse, apiError) in
             
             DispatchQueue.main.async {
+                let error = NSError(domain: TREnetworkingErrorDomain, code: HTTPResponseFailed, userInfo: nil)
+                
                 guard let json = json else {
-                    if let error = error {
+                    completion(APIResult.failure(error))
+                    if let error = apiError {
                         completion(APIResult.failure(error))
                     }
                     return
@@ -76,7 +82,6 @@ extension APIClient {
                         completion(APIResult.success((result,hasNextPage)))
                     }
                 } else {
-                    let error = NSError(domain: TREnetworkingErrorDomain, code: JsonKeyOrElementInvalid, userInfo: nil)
                     completion(APIResult.failure(error))
                 }
             }

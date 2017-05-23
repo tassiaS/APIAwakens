@@ -35,7 +35,6 @@ class StarWarsDetailViewController: UIViewController, UIPickerViewDelegate, UIPi
     @IBOutlet weak var exchangeTextField: UITextField!
     @IBOutlet weak var pickerView: UIPickerView!
 
-
     var didCharacterStarshipFinished = false
     var totalValueToEnglish = 0.0
     var totalValueToMetric = 0.0
@@ -131,6 +130,10 @@ class StarWarsDetailViewController: UIViewController, UIPickerViewDelegate, UIPi
             self?.indicator.stopAnimating()
             switch result {
                 case .failure(let error):
+                    if page == 1 {
+                        self?.showAlert(title: "Something failed", message: "Couldn't load Starship - try again later", actionTitle: "Ok")
+                    }
+                    
                     print(error)
                 case .success(let result):
                     self?.hasFinishedRequest = true
@@ -165,6 +168,10 @@ class StarWarsDetailViewController: UIViewController, UIPickerViewDelegate, UIPi
         swAPIClient.fetchForVehicle(nextPage: page, completion: { [weak self] (result) in
             switch result {
                 case .failure(let error):
+                    if page == 1 {
+                        self?.showAlert(title: "Something failed", message: "Couldn't load Vehicle - try again later", actionTitle: "Ok")
+                    }
+
                     print(error)
                 case .success(let result):
                     self?.hasFinishedRequest = true
@@ -257,6 +264,10 @@ class StarWarsDetailViewController: UIViewController, UIPickerViewDelegate, UIPi
         swAPIClient.fetchForCharacter(nextPage: page, completion: { [weak self] (result) in
             switch result {
             case .failure(let error):
+                if page == 1 {
+                    self?.showAlert(title: "Something failed", message: "Couldn't load Character - try again later", actionTitle: "Ok")
+                }
+
                 print(error)
             case .success(let result):
                 self?.hasFinishedRequest = true
@@ -456,8 +467,8 @@ class StarWarsDetailViewController: UIViewController, UIPickerViewDelegate, UIPi
 
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         let pickerViewRowsQuantity = pickerView.numberOfRows(inComponent: component)
-            if (pickerViewRowsQuantity - row == 3) && hasNextPage && hasFinishedRequest {
-                
+        
+        if (pickerViewRowsQuantity - row == 3) && hasNextPage && hasFinishedRequest {
                 hasFinishedRequest = false
                 switch type {
                 case .starship:
@@ -558,7 +569,7 @@ class StarWarsDetailViewController: UIViewController, UIPickerViewDelegate, UIPi
         if textFieldText != "" {
             if let text = Int(textFieldText) {
                 if text <= 0 {
-                    showAlert()
+                    showAlert(title: "Alert", message: "Exchange value must be higher than zero", actionTitle: "Ok")
                     return false
                 }
             }
@@ -566,9 +577,9 @@ class StarWarsDetailViewController: UIViewController, UIPickerViewDelegate, UIPi
         return true
     }
 
-    func showAlert() {
-        let alert = UIAlertController(title: "Alert", message: "Exchange value must be higher than zero", preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+    func showAlert(title: String, message: String, actionTitle: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: actionTitle, style: UIAlertActionStyle.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
     // Add done button to numpad
